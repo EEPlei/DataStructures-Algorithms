@@ -1,5 +1,32 @@
 Homework 1 - TeamName
 ========================================================
+#edge
+#edge function will return a data frame which is a table summarizing all edges.
+#Its first column stores the starting vertices and its second column stores the ending vertics
+#Its third column stores the edge length
+edge <- function(g){
+  output <- data.frame(start = numeric, end = numeric, weight = numeric)
+  for(i in 1:length(g)){
+    cur <- graph[i]
+    curvec <- unlist(cur)
+    num_to <- length(curvec)/2 #number of vertices the current vertex can go to
+    if(num_to)==0)
+      next
+    for(j in 1:num_to){
+      newedge <- c(i,curvec[j],curvec[j*2])
+      output <- rbind(output,setNames(as.list(newedge), names(output)))
+    }
+  }
+}
+
+#is_undirected
+#to check whether its edge data frame is symmetric
+is_undirected <- function(g){
+  edges <- edge(g)
+  
+  return false
+}
+
 #shortest path
 shortest_path <- function(g,v1,v2){
   if(!is_valid(g)){
@@ -11,6 +38,15 @@ shortest_path <- function(g,v1,v2){
   return
 }
 
+#Is_connected_graph
+#This function checks whether the graph is a connected entity as a whole
+is_connected_graph<-function(g){
+  edges <- edge(g)
+  if(all((1:length(g) %in% c(edges$start,edges$end))))
+    return true
+  else
+    return false
+}
 
 #minimum spanning tree
 min_span_tree <- function(g){
@@ -25,7 +61,9 @@ min_span_tree <- function(g){
   #The following code will apply Kruskal's Algorithm
   MST <- min
   
-  while(!is.connected(MST))
+  while(!is_connected_graph(MST)){
+    #keep adding minimum edge to MST
+  }
   
   return MST
 }
