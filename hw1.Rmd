@@ -80,7 +80,7 @@ min_span_tree <- function(g){
   vertices <- list(MST$start,MST$end) #record all the vertices in MST
   while(length(MST) < length(g) - 1){
     neighbor <- edges[edges$start %in% vertices | edges$end %in% vertices,]
-    neighbor <- diff(neigbor,MST) # THis is PSEUDO CODE !!!
+    neighbor <- diff_df(neigbor,MST)
     #protection for non-connected components
     if(nrow(neigb) == 0){
       stop("The input graph is not connected.")
@@ -90,4 +90,11 @@ min_span_tree <- function(g){
   }
   
   return MST
+}
+
+
+#This function is for taking difference between two data frames
+diff_df <- function(df1,df2,...){
+   expr <- paste("subset(df1,", paste(sapply(names(df1), function(x){paste("!(", x, " %in% df2$", x, ")", sep="")}), collapse=" | "), ")")
+   eval(parse(text=expr))
 }
