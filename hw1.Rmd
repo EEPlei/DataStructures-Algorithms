@@ -1,4 +1,4 @@
-Homework 1 - TeamName
+Homework 1 - Team 4 Duke Dinosaurs
 ========================================================
 #edge
 #edge function will return a data frame which is a table summarizing all edges.
