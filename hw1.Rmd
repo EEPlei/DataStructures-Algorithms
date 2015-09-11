@@ -1,3 +1,31 @@
 Homework 1 - TeamName
 ========================================================
+#shortest path
+shortest_path <- function(g,v1,v2){
+  if(!is_valid(g)){
+    stop("Please input a valid graph.")
+  }
+  
+  #The following code will apply Dijkstra's Algorithm
+  
+  return
+}
 
+
+#minimum spanning tree
+min_span_tree <- function(g){
+  if(!is_valid(g)){
+    stop("Please input a valid graph.")
+  }
+  
+  if(!is_undirected){
+    stop("Please input an undirected graph")
+  }
+  
+  #The following code will apply Kruskal's Algorithm
+  MST <- min
+  
+  while(!is.connected(MST))
+  
+  return MST
+}
