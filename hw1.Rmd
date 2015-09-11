@@ -1,5 +1,6 @@
 Homework 1 - Team 4 Duke Dinosaurs
 ========================================================
+```{r}
 #edge
 #edge function will return a data frame which is a table summarizing all edges.
 #Its first column stores the starting vertices and its second column stores the ending vertics
@@ -98,3 +99,4 @@ diff_df <- function(df1,df2,...){
    expr <- paste("subset(df1,", paste(sapply(names(df1), function(x){paste("!(", x, " %in% df2$", x, ")", sep="")}), collapse=" | "), ")")
    eval(parse(text=expr))
 }
+```
