@@ -5,7 +5,7 @@ Homework 1 - TeamName
 #Its first column stores the starting vertices and its second column stores the ending vertics
 #Its third column stores the edge length
 edge <- function(g){
-  output <- data.frame(start = numeric, end = numeric, weight = numeric)
+  output <- data.frame(start = numeric(), end = numeric(), weight = numeric())
   for(i in 1:length(g)){
     cur <- graph[i]
     curvec <- unlist(cur)
@@ -23,8 +23,16 @@ edge <- function(g){
 #to check whether its edge data frame is symmetric
 is_undirected <- function(g){
   edges <- edge(g)
-  
-  return false
+  for(i in 1:nrow(edges)){
+    istart <- edges[i,]$start
+    iend <- edges[i,]$end
+    iweight <- edges[i,]$weight
+    if(is.null(edges[edges$start == iend & edges$end == istart,]$weight))
+      return FALSE
+    if(edges[edges$start == iend & edges$end == istart,]$weight != iweight)
+      return FALSE
+  } 
+  return TRUE
 }
 
 #shortest path
@@ -38,15 +46,11 @@ shortest_path <- function(g,v1,v2){
   return
 }
 
-#Is_connected_graph
-#This function checks whether the graph is a connected entity as a whole
-is_connected_graph<-function(g){
-  edges <- edge(g)
-  if(all((1:length(g) %in% c(edges$start,edges$end))))
-    return true
-  else
-    return false
-}
+# #Is_connected_graph
+# #This function checks whether the graph is a connected entity as a whole
+# is_connected_graph<-function(g){
+#   
+# }
 
 #minimum spanning tree
 min_span_tree <- function(g){
@@ -58,11 +62,31 @@ min_span_tree <- function(g){
     stop("Please input an undirected graph")
   }
   
-  #The following code will apply Kruskal's Algorithm
-  MST <- min
-  
-  while(!is_connected_graph(MST)){
-    #keep adding minimum edge to MST
+  edges <- edge(g)
+  #Remove redundancies for the edge table of an Undirected graph
+  edges <- edges[edges$start < edges$end,]
+#   #The following code will apply Kruskal's Algorithm
+#   #However I find Kruskal's Algorithm is hard to implement
+#   edges <- edges[order(edges$weight,edges$start,edges$end),]
+#   MST <- 
+#   
+#   while(!is_connected_graph(MST)){
+#     #keep adding the minimal edge to MST
+#   }
+
+  #The following code will apply Prim's Algorithm
+  edges <- edges[order(edges$weight,edges$start,edges$end),]
+  MST <- edges[1,]
+  vertices <- list(MST$start,MST$end) #record all the vertices in MST
+  while(length(MST) < length(g) - 1){
+    neighbor <- edges[edges$start %in% vertices | edges$end %in% vertices,]
+    neighbor <- diff(neigbor,MST) # THis is PSEUDO CODE !!!
+    #protection for non-connected components
+    if(nrow(neigb) == 0){
+      stop("The input graph is not connected.")
+    }
+    MST <- rbind(MST,setNames(as.list(neighbor[1,]), names(MST)))
+    vertices <- list(MST$start,MST$end)
   }
   
   return MST
