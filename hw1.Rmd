@@ -14,7 +14,7 @@ edge <- function(g){
     if(num_to)==0)
       next
     for(j in 1:num_to){
-      newedge <- c(i,curvec[j],curvec[j*2])
+      newedge <- c(i,curvec[j],curvec[j+num_to])
       output <- rbind(output,setNames(as.list(newedge), names(output)))
     }
   }
@@ -80,7 +80,7 @@ min_span_tree <- function(g){
   MST <- edges[1,]
   vertices <- list(MST$start,MST$end) #record all the vertices in MST
   while(length(MST) < length(g) - 1){
-    neighbor <- edges[edges$start %in% vertices | edges$end %in% vertices,]
+    neighbor <- edges[(edges$start %in% vertices | edges$end %in% vertices) & (!(edges$start %in% vertices) | !(edges$end %in% vertices)),]
     neighbor <- diff_df(neigbor,MST)
     #protection for non-connected components
     if(nrow(neigb) == 0){
