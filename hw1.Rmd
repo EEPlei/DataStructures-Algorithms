@@ -1,6 +1,28 @@
 Homework 1 - Team 4 Duke Dinosaurs
 ========================================================
 ```{r}
+#Visualize Graph
+#First we want to start off with a standard list function to help us transition to the "edge" function below
+##STILL NEED TO WORK ON WHERE TO PLACE DIRECTED AND UNDIRECTED EDGES
+Team4Graph = list(A = list(edges   = c(2L, 6L),
+                           weights = c(6, 3)),
+                  B = list(edges   = c(3L, 6L),
+                           weights = c(4, 13)),
+                  C = list(edges   = c(6L),
+                           weights = c(1 )),
+                  D = list(edges   = c(5L),
+                           weights = c(10 )),
+                  E = list(edges   = c(1L,6L),
+                           weights = c(1, 5)),
+                  F = list(edges   = c(1L, 2L, 3L, 5L),
+                           weights = c(3, 13, 1, 5))
+                  )
+str(Team4Graph)
+
+
+
+
+
 #edge
 #edge function will return a data frame which is a table summarizing all edges.
 #Its first column stores the starting vertices and its second column stores the ending vertics
