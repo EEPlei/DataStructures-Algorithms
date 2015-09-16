@@ -30,10 +30,10 @@ str(Team4Graph)
 edge <- function(g){
   output <- data.frame(start = numeric(), end = numeric(), weight = numeric())
   for(i in 1:length(g)){
-    cur <- graph[i]
+    cur <- g[i]
     curvec <- unlist(cur)
     num_to <- length(curvec)/2 #number of vertices the current vertex can go to
-    if(num_to)==0)
+    if(num_to==0)
       next
     for(j in 1:num_to){
       newedge <- c(i,curvec[j],curvec[j+num_to])
@@ -122,3 +122,4 @@ diff_df <- function(df1,df2,...){
    eval(parse(text=expr))
 }
 ```
+test
