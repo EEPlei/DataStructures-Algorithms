@@ -12,7 +12,6 @@ Team4Graph = list(A = list(edges   = c(2L, 5L, 6L),
                            weights = c(4, 7 )),
                   D = list(edges   = c(5L, 6L),
                            weights = c(10, 12 )),
-<<<<<<< HEAD
                   E = list(edges   = c(1L, 4L, 6L),
                            weights = c(1, 10, 5)),
                   F = list(edges   = c(1L, 2L, 3L, 4L, 5L),
@@ -33,17 +32,10 @@ is_valid <- function(g){
   
 }
 
-=======
-                  E = list(edges   = c(1L,4L, 6L),
-                           weights = c(1, 10, 5)),
-                  F = list(edges   = c(1L, 2L, 3L, 4L, 5L),
-                           weights = c(3, 13, 7, 12, 5))
-)
-str(Team4Graph)
 
 
 #g <- Team4Graph
->>>>>>> 8af10be68f7856830ece7c668915ea57b83bf36e
+
 
 
 #edge
