@@ -4,7 +4,7 @@ Homework 1 - Team 4 Duke Dinosaurs
 #Visualize Graph
 #First we want to start off with a standard list function to help us transition to the "edge" function below
 ##STILL NEED TO WORK ON WHERE TO PLACE DIRECTED AND UNDIRECTED EDGES
-Team4Graph = list(A = list(edges   = c(2L, , 5L, 6L),
+Team4Graph = list(A = list(edges   = c(2L, 5L, 6L),
                            weights = c(6, 1, 3)),
                   B = list(edges   = c(1L, 3L, 6L),
                            weights = c(6, 4, 13)),
