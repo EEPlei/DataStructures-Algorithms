@@ -4,23 +4,23 @@ Homework 1 - Team 4 Duke Dinosaurs
 #Visualize Graph
 #First we want to start off with a standard list function to help us transition to the "edge" function below
 ##STILL NEED TO WORK ON WHERE TO PLACE DIRECTED AND UNDIRECTED EDGES
-Team4Graph = list(A = list(edges   = c(2L, 6L),
-                           weights = c(6, 3)),
-                  B = list(edges   = c(3L, 6L),
-                           weights = c(4, 13)),
-                  C = list(edges   = c(6L),
-                           weights = c(1 )),
-                  D = list(edges   = c(5L),
-                           weights = c(10 )),
-                  E = list(edges   = c(1L,6L),
-                           weights = c(1, 5)),
-                  F = list(edges   = c(1L, 2L, 3L, 5L),
-                           weights = c(3, 13, 1, 5))
-                  )
+Team4Graph = list(A = list(edges   = c(2L, 5L, 6L),
+                           weights = c(6, 1, 3)),
+                  B = list(edges   = c(1L, 3L, 6L),
+                           weights = c(6, 4, 13)),
+                  C = list(edges   = c(2L, 6L),
+                           weights = c(4, 7 )),
+                  D = list(edges   = c(5L, 6L),
+                           weights = c(10, 12 )),
+                  E = list(edges   = c(1L,4L, 6L),
+                           weights = c(1, 10, 5)),
+                  F = list(edges   = c(1L, 2L, 3L, 4L, 5L),
+                           weights = c(3, 13, 7, 12, 5))
+)
 str(Team4Graph)
 
 
-
+#g <- Team4Graph
 
 
 #edge
@@ -28,6 +28,7 @@ str(Team4Graph)
 #Its first column stores the starting vertices and its second column stores the ending vertics
 #Its third column stores the edge length
 edge <- function(g){
+  # function where input is 'g' #
   output <- data.frame(start = numeric(), end = numeric(), weight = numeric())
   for(i in 1:length(g)){
     cur <- g[i]
@@ -40,6 +41,7 @@ edge <- function(g){
       output <- rbind(output,setNames(as.list(newedge), names(output)))
     }
   }
+  return(output)
 }
 
 #is_undirected
@@ -51,11 +53,11 @@ is_undirected <- function(g){
     iend <- edges[i,]$end
     iweight <- edges[i,]$weight
     if(is.null(edges[edges$start == iend & edges$end == istart,]$weight))
-      return FALSE
+      return(FALSE)
     if(edges[edges$start == iend & edges$end == istart,]$weight != iweight)
-      return FALSE
+      return(FALSE)
   } 
-  return TRUE
+  return(TRUE)
 }
 
 #shortest path
@@ -66,7 +68,7 @@ shortest_path <- function(g,v1,v2){
   
   #The following code will apply Dijkstra's Algorithm
   
-  return
+  return()
 }
 
 # #Is_connected_graph
@@ -74,6 +76,12 @@ shortest_path <- function(g,v1,v2){
 # is_connected_graph<-function(g){
 #   
 # }
+
+#This function is for taking difference between two data frames
+diff_df <- function(df1,df2,...){
+  expr <- paste("subset(df1,", paste(sapply(names(df1), function(x){paste("!(", x, " %in% df2$", x, ")", sep="")}), collapse=" | "), ")")
+  eval(parse(text=expr))
+}
 
 #minimum spanning tree
 min_span_tree <- function(g){
@@ -88,15 +96,15 @@ min_span_tree <- function(g){
   edges <- edge(g)
   #Remove redundancies for the edge table of an Undirected graph
   edges <- edges[edges$start < edges$end,]
-#   #The following code will apply Kruskal's Algorithm
-#   #However I find Kruskal's Algorithm is hard to implement
-#   edges <- edges[order(edges$weight,edges$start,edges$end),]
-#   MST <- 
-#   
-#   while(!is_connected_graph(MST)){
-#     #keep adding the minimal edge to MST
-#   }
-
+  #   #The following code will apply Kruskal's Algorithm
+  #   #However I find Kruskal's Algorithm is hard to implement
+  #   edges <- edges[order(edges$weight,edges$start,edges$end),]
+  #   MST <- 
+  #   
+  #   while(!is_connected_graph(MST)){
+  #     #keep adding the minimal edge to MST
+  #   }
+  
   #The following code will apply Prim's Algorithm
   edges <- edges[order(edges$weight,edges$start,edges$end),]
   MST <- edges[1,]
@@ -112,27 +120,7 @@ min_span_tree <- function(g){
     vertices <- list(MST$start,MST$end)
   }
   
-  return MST
-}
-
-
-#This function is for taking difference between two data frames
-diff_df <- function(df1,df2,...){
-   expr <- paste("subset(df1,", paste(sapply(names(df1), function(x){paste("!(", x, " %in% df2$", x, ")", sep="")}), collapse=" | "), ")")
-   eval(parse(text=expr))
-}
-
-#This function is for checking if the input graph is valid
-is_valid <- function(g){
-  if(typeof(g)!="list")
-    return FALSE
-  for(i in 1:length(g)){
-    if(typeof(g[[i]])!="list")
-      return FALSE
-  }
-  if(length(g)!=length(unique(g))
-    return FALSE
-  
+  return(MST)
 }
 
 ```
