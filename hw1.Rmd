@@ -6,6 +6,7 @@ Homework 1 - Team 4 Duke Dinosaurs
 #Its first column stores the starting vertices and its second column stores the ending vertics
 #Its third column stores the edge length
 edge <- function(g){
+  # function where input is 'g' #
   output <- data.frame(start = numeric(), end = numeric(), weight = numeric())
   for(i in 1:length(g)){
     cur <- graph[i]
