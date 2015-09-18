@@ -121,8 +121,7 @@ diff_df <- function(df1,df2,...){
    expr <- paste("subset(df1,", paste(sapply(names(df1), function(x){paste("!(", x, " %in% df2$", x, ")", sep="")}), collapse=" | "), ")")
    eval(parse(text=expr))
 }
-```
-test1234
+
 #This function is for checking if the input graph is valid
 is_valid <- function(g){
   if(typeof(g)!="list")
@@ -135,4 +134,8 @@ is_valid <- function(g){
     return FALSE
   
 }
+
+```
+
+
 
