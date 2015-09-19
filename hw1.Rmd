@@ -47,9 +47,6 @@ is_valid <- function(g){
   
 }
 
-is_isomorphic = function(g1, g2){
-  
-}
 
 #g <- Team4Graph
 
@@ -107,15 +104,8 @@ is_undirected <- function(g){
   return(TRUE)
 }
 
-#shortest path
-shortest_path <- function(g,v1,v2){
-  if(!is_valid(g)){
-    stop("Please input a valid graph.")
-  }
+is_isomorphic = function(g1, g2){
   
-  #The following code will apply Dijkstra's Algorithm
-  
-  return()
 }
 
 # #Is_connected_graph
@@ -130,6 +120,16 @@ diff_df <- function(df1,df2,...){
   eval(parse(text=expr))
 }
 
+#shortest path
+shortest_path <- function(g,v1,v2){
+  if(!is_valid(g)){
+    stop("Please input a valid graph.")
+  }
+  
+  #The following code will apply Dijkstra's Algorithm
+  
+  return()
+}
 #minimum spanning tree
 min_span_tree <- function(g){
   if(!is_valid(g)){
