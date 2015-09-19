@@ -4,36 +4,36 @@ Homework 1 - Team 4 Duke Dinosaurs
 #Visualize Graph
 #First we want to start off with a standard list function to help us transition to the "edge" function below
 ##STILL NEED TO WORK ON WHERE TO PLACE DIRECTED AND UNDIRECTED EDGES
-g1 = list(        A = list(edges   = c(2L, 5L, 6L),
-                           weights = c(6, 1, 3)),
-                  B = list(edges   = c(1L, 3L, 6L),
-                           weights = c(6, 4, 13)),
-                  C = list(edges   = c(2L, 6L),
-                           weights = c(4, 7)),
-                  D = list(edges   = c(5L, 6L),
-                           weights = c(10, 12 )),
-                  E = list(edges   = c(1L, 4L, 6L),
-                           weights = c(1, 10, 5)),
-                  F = list(edges   = c(1L, 2L, 3L, 4L, 5L),
-                           weights = c(3, 13, 7, 12, 5))
+graph1 = list(A = list(edges   = c(2L, 5L, 6L),
+                   weights = c(6, 1, 3)),
+          B = list(edges   = c(1L, 3L, 6L),
+                   weights = c(6, 4, 13)),
+          C = list(edges   = c(2L, 6L),
+                   weights = c(4, 7)),
+          D = list(edges   = c(5L, 6L),
+                   weights = c(10, 12 )),
+          E = list(edges   = c(1L, 4L, 6L),
+                   weights = c(1, 10, 5)),
+          F = list(edges   = c(1L, 2L, 3L, 4L, 5L),
+                   weights = c(3, 13, 7, 12, 5))
                   )
 # g1 is an undirected graph #
-str(g1)
-g2 = list(A = list(edges   = c(2L),
-                       weights = c(1 )),
-              B = list(edges   = c(3L),
-                       weights = c(1 )),
-              C = list(edges   = c(5L),
-                       weights = c(1 )),
-              D = list(edges   = c(2L),
-                       weights = c(1 )),
-              E = list(edges   = c(4L,6L),
-                       weights = c(1,1  )),
-              F = list(edges   = c(),
-                       weights = c())
+str(graph1)
+graph2 = list(A = list(edges   = c(2L),
+                   weights = c(1 )),
+          B = list(edges   = c(3L),
+                   weights = c(1 )),
+          C = list(edges   = c(5L),
+                   weights = c(1 )),
+          D = list(edges   = c(2L),
+                   weights = c(1 )),
+          E = list(edges   = c(4L,6L),
+                   weights = c(1,1  )),
+          F = list(edges   = c(),
+                   weights = c())
              )
 # g2 is the graph example from class - should be directed #
-str(g2)
+str(graph2)
 #This function is for checking if the input graph is valid
 is_valid <- function(g){
   if(typeof(g)!="list")
@@ -105,7 +105,14 @@ is_undirected <- function(g){
 }
 
 is_isomorphic = function(g1, g2){
-  
+  if(length(g1) != length(g2)){
+    stop("Two graphs do not have same number of vertices")
+  }
+  for(i in length(g1)){
+    if(names(g1[i]) != names(g2[i]){
+      stop("Name of i vertex is not the same")
+    }}
+  }
 }
 
 # #Is_connected_graph
