@@ -32,7 +32,9 @@ is_valid <- function(g){
   
 }
 
-
+is_isomorphic = function(g1, g2){
+  
+}
 
 #g <- Team4Graph
 
@@ -45,6 +47,8 @@ is_valid <- function(g){
 edge <- function(g){
   # function where input is 'g' #
   output <- data.frame(start = numeric(), end = numeric(), weight = numeric())
+  # makes an empty dataframe. where the horizontal header has "start", "end", and "weight" # 
+  # numeric() creates a zero vector for each column #
   for(i in 1:length(g)){
     cur <- g[i]
     curvec <- unlist(cur)
@@ -58,6 +62,16 @@ edge <- function(g){
   }
   return(output)
 }
+# ForLoop, i can take on any numbers between 1 and the length of g. #
+# cur is any of the elements within input 'g' #
+# length(g) in the case of a list, will produce the number of elements #
+# in the outer-most list #
+# if cur is a list, unlist(cur) will take all the elements inside cur and changes it into a vector #
+# it is then stored in variable 'curvec' #
+# num_to takes the length of vector 'curvec' and divides it by 2 #
+# if num_to is 0, it means that there were zero elements within cur #
+# next tells R to just skip/ignore this case #
+# otherwise, take 
 
 #is_undirected
 #to check whether its edge data frame is symmetric
