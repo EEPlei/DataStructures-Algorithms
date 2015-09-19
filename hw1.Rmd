@@ -47,14 +47,8 @@ is_valid <- function(g){
     #below is to check if every element is a list
     if(typeof(g[[i]]) != "list")
       return(FALSE)
-    #below is to check if every element only contains edges and weights
-    if(all(names(g[[i]]) != c("edges","weights")))
-        return(FALSE)
-    #below is to check if the types of edges are all integer 
-    if(all(typeof(g[[i]]$edges) != "integer"))
-      return(FALSE)
-    #below is to check if the types of weights are all numeric
-    if(all(class(g[[i]]$weights) != "numeric"))
+    #below is to check if every element only contains edges and weights that are of the appropriate type
+    if(all(names(g[[i]]) != c("edges","weights")) | all(typeof(g[[i]]$edges) != "integer") | all(class(g[[i]]$weights) != "numeric"))
       return(FALSE)
     #below is to check there are any edges to non-existent vertices
     if(any(g[[i]]$edges>length(g)) | any(g[[i]]$edges<=1))
