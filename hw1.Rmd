@@ -125,7 +125,19 @@ is_isomorphic = function(g1, g2){
   for(i in 1:length(g1)){
     if(!(TRUE %in% (names(g1[i]) == names(g2)))){
       stop("Name of vertices are not the same")}
-      # will search for the ith vertex name of g1 in g2 #
+      j = which(names(g1[i]) == names(g2))
+      if(length(unlist(g1[[i]])) != length(unlist(g2[[j]]))){
+          stop("Vertices do not have the same number of edges")
+        } 
+      for(k in 1:(length(unlist(g1[[i]])))/2){
+        c = g1[[i]]$edges[k]
+        d = names(g1[c]) == names(g2)
+        if(!(d %in% g2[[j]]$edges)){
+          stop("Graphs are not isomorphic")}
+      } 
+    } 
+}
+ # will search for the ith vertex name of g1 in g2 #
       # so if the jth vertex of g2 has the same name as #
       # the ith vertex name in g1, it will return a logical #
       # vector where the jth element is TRUE #
@@ -133,14 +145,10 @@ is_isomorphic = function(g1, g2){
       # R will stop running the function #
       # and return the error message #
       # that the vertices do not have the same names #
-      j = which(names(g1[i]) == names(g2))
-      # since g1[i] == names(g2) will return a logical vector #
+# since g1[i] == names(g2) will return a logical vector #
       # with one entry that is true #
       # we can use which() to tell us which element it is #
-      if(length(unlist(g1[[i]])) != length(unlist(g2[[j]]))){
-          stop("Vertices do not have the same number of edges")
-        } 
-      # unlisting each vertex of a graph will give us # 
+# unlisting each vertex of a graph will give us # 
       # the the number of edges and the number of weights #
       # so if there are n edges, and n corresponding weights #
       # the number we will get back is 2n # 
@@ -154,14 +162,7 @@ is_isomorphic = function(g1, g2){
       
     # All I have to do, is figure out if each g1's vectors are going #
     # to the same vectors g2's vectors are going to #
-      for(k in 1:(length(unlist(g1[[i]])))/2){
-        c = g1[[i]]$edges[k]
-        d = names(g1[c]) == names(g2)
-        if(!(d %in% g2[[j]]$edges)){
-          stop("Graphs are not isomorphic")}
-      } 
-      
-    } # we already know that ith vertex of g1 and cth vertex of g1 #
+# we already know that ith vertex of g1 and cth vertex of g1 #
       # are connected with an undirected edge #
       # earlier, we made sure that each vertex in g1 #
       # has a matching one (j) in g2 with the same name #
@@ -170,8 +171,6 @@ is_isomorphic = function(g1, g2){
       # it means that although i connects to c in g1 #
       # the vertex with the same name, j does not connect to #
       # d which has the same name as c in g2 #
-}
-
 
 
 #This function is for taking difference between two data frames
