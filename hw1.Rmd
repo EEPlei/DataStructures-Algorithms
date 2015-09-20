@@ -109,15 +109,14 @@ is_isomorphic = function(g1, g2){
     stop("Two graphs do not have same number of vertices")
   }
   for(i in length(g1)){
-    if(names(g1[i]) != names(g2[i])){
-      stop("Name of vertices are not the same")
-    if(length(g1[[i]]) != length(g2[[i]])){
-      stop("Different number of edges/weights")
-    }
-    }
-  }
-  
+    matching <- (names(g1[i]) == names(g2))
+    if(!(TRUE %in% matching)){
+      stop("Names of vertices do not match")
+    }else
+       j = which(matching)
+  } 
 }
+
 
 # #Is_connected_graph
 # #This function checks whether the graph is a connected entity as a whole
