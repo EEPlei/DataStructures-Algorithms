@@ -84,7 +84,7 @@ edge <- function(g){
     #number of vertices the current vertex goes to #
     if(num_to==0)
       next
-    for(j in 1:num_to)
+    for(j in 1:num_to){
       newedge <- c(i,curvec[j],curvec[j+num_to])
       output <- rbind(output,setNames(as.list(newedge), names(output)))
     }
@@ -140,6 +140,25 @@ diff_df <- function(df1,df2,...){
   expr <- paste("subset(df1,", paste(sapply(names(df1), function(x){paste("!(", x, " %in% df2$", x, ")", sep="")}), collapse=" | "), ")")
   eval(parse(text=expr))
 }
+
+
+
+#is_connected function
+is_connected <- function(g, v1, v2){
+  #ensure if the graph is valid or not
+  #if(!is_valid(g)){
+  #  stop("Please input a valid graph.")
+  #}
+  findv1 = 0
+  findv2 = 0
+  flag = 0
+}
+  for(i in 1:length(g)){
+    if()
+  } 
+  edges <- edge(g)
+}
+
 
 
 #shortest path
