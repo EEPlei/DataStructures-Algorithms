@@ -131,9 +131,11 @@ is_isomorphic = function(g1, g2){
         } 
       for(k in 1:(length(unlist(g1[[i]])))/2){
         c = g1[[i]]$edges[k]
-        d = names(g1[c]) == names(g2)
-        if(!(d %in% g2[[j]]$edges)){
+        d = which(names(g1[c]) == names(g2))
+        j = which(names(g1[i]) == names(g2))
+        if(FALSE == (d %in% g2[[j]]$edges)){
           stop("Graphs are not isomorphic")}
+        else return("Pass")
       } 
     } 
 }
