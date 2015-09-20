@@ -135,28 +135,58 @@ is_isomorphic = function(g1, g2){
   
 }
 
-# #Is_connected_graph
-# #This function checks whether the graph is a connected entity as a whole
-# is_connected_graph<-function(g){
-#   
-# }
-
 #This function is for taking difference between two data frames
 diff_df <- function(df1,df2,...){
   expr <- paste("subset(df1,", paste(sapply(names(df1), function(x){paste("!(", x, " %in% df2$", x, ")", sep="")}), collapse=" | "), ")")
   eval(parse(text=expr))
 }
 
+
 #shortest path
 shortest_path <- function(g,v1,v2){
   if(!is_valid(g)){
     stop("Please input a valid graph.")
   }
-  
   #The following code will apply Dijkstra's Algorithm
+  edges <- edge(g)
+  vinfo <- data.frame(v = character(),dist = numeric(),prev = numeric())
+  unvisited <- c(names(g))
+  for(vert in unvisited){
+    newvert <- c(vert,Inf,NULL)
+    vinfo <- rbind(vinfo,setNames(as.list(newvert), names(vinfo)))
+  }
   
-  return()
+  vinfo[vinfo$v == v1,]$dist <- 0
+  
+  while(!is.null(unvisited)){
+    temp <- vinfo[vinfo$v %in% univisted,]
+    u <- temp[temp$dist == min(temp$dist),][1,]$v   #vertex in unvisited with min dist[u]  
+    if(temp[temp$v == u,]$dist == Inf){
+      return(c())
+    }
+    unvisited <- unvisited[unvisited != u]          #remove u from unvisited
+    
+    for(vert in edges[edges$start == u,]$end){      #for each neighbor u can go to
+      d <- vinfo[vinfo$v == u,]$dist + edges[edges$start == u & edges$end == vert,]weight
+      if(d < dist[vert]){                           # A shorter path to vert has been found
+        vinfo[vinfo$v == vert,]$dist <- d
+        vinfo[vinfo$v == vert,]$prev <- u
+      }
+    }
+  }
+  path <- c(v2)
+  vert <- v2
+  while(!is.null(vinfo[vinfo$v == vert,]$prev)){
+    path <- c(path,vinfo[vinfo$v == vert,]$prev)
+    vert <- vinfo[vinfo$v == vert,]$prev
+  }
+  
+  return(rev(path))
 }
+
+
+
+
 #minimum spanning tree
 min_span_tree <- function(g){
   if(!is_valid(g)){
@@ -187,7 +217,7 @@ min_span_tree <- function(g){
     neighbor <- edges[(edges$start %in% vertices | edges$end %in% vertices) & (!(edges$start %in% vertices) | !(edges$end %in% vertices)),]
     neighbor <- diff_df(neigbor,MST)
     #protection for non-connected components
-    if(nrow(neigb) == 0){
+    if(nrow(neighbor) == 0){
       stop("The input graph is not connected.")
     }
     MST <- rbind(MST,setNames(as.list(neighbor[1,]), names(MST)))
