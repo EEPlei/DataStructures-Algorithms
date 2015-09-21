@@ -117,12 +117,11 @@ edge <- function(g){
 #to check whether its edge data frame is symmetric
 is_undirected <- function(g){
   edges <- edge(g)
-  if (length(nrow(edges))>0)
   for(i in 1:nrow(edges)){
     istart <- edges[i,]$start
     iend <- edges[i,]$end
     iweight <- edges[i,]$weight
-    if(is.null(edges[edges$start == iend & edges$end == istart,]$weight))
+    if(nrow(edges[edges$start == iend & edges$end == istart,]) == 0)
       return(FALSE)
     if(edges[edges$start == iend & edges$end == istart,]$weight != iweight)
       return(FALSE)
