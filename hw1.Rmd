@@ -1,5 +1,3 @@
-Homework 1 - Team 4 Duke Dinosaurs
-========================================================
 ```{r}
 #Visualize Graph
 #First we want to start off with a standard list function to help us transition to the "edge" function below
@@ -36,34 +34,36 @@ graph2 = list(A = list(edges   = c(2L),
 str(graph2)
 
 #is_valid function
+#check if the graph is a list
+#check if the names for every element are all unique
+#check if every element is a list
+#check if every element only contains edges and weights that are of the appropriate type
+#check there are any edges to non-existent vertices
+#check if all weights are not less than or equal to 0
+#check if every edge has a weight
 is_valid <- function(g){
-  #below is to check if the graph is a list
   if(typeof(g)!="list")
     return(FALSE)
-  #below is to check if the names for every element are all unique
-  if(length(g) != length(unique(g)))
-    return(FALSE)  
+  if(length(g) != length(unique(names(g))))
+    return(FALSE)
   for(i in 1:length(g)){
-    #below is to check if every element is a list
     if(typeof(g[[i]]) != "list")
       return(FALSE)
-    #below is to check if every element only contains edges and weights that are of the appropriate type
-    if(all(names(g[[i]]) != c("edges","weights")) | all(typeof(g[[i]]$edges) != "integer") | all(class(g[[i]]$weights) != "numeric"))
+    if(all(names(g[[i]]) != c("edges","weights")))
       return(FALSE)
-    #below is to check there are any edges to non-existent vertices
-    if(any(g[[i]]$edges>length(g)) | any(g[[i]]$edges<=1))
+    if(typeof(g[[i]]$edges) != "integer" & typeof(g[[i]]$edges) != "NULL")
       return(FALSE)
-    #below is to check if all weights are not less than or equal to 0
+    if(class(g[[i]]$weights) != "numeric" & class(g[[i]]$weights) != "NULL")
+      return(FALSE)
+    if(any(g[[i]]$edges>length(g)) | any(g[[i]]$edges<1))
+      return(FALSE)
     if(any(g[[i]]$weights <= 0))
       return(FALSE)
-    #below is to check if every edge has a weight
     if(length(g[[i]]$edges) != length(g[[i]]$weights))
       return(FALSE)
   }
   return(TRUE)
 }
-
-
 #g <- Team4Graph
 
 
@@ -84,9 +84,18 @@ edge <- function(g){
     #number of vertices the current vertex goes to #
     if(num_to==0)
       next
-    for(j in 1:num_to)
+    for(j in 1:num_to){
       newedge <- c(i,curvec[j],curvec[j+num_to])
       output <- rbind(output,setNames(as.list(newedge), names(output)))
+    }
+    #convert numbers to letters
+    for(m in 1:length(output$start)){
+      for(n in 1:length(g)){
+        if(output$start[m] == n)
+          output$start[m] = replace(output$start[m],,names(g[n]))
+        if(output$end[m] == n)
+          output$end[m] = replace(output$end[m],,names(g[n]))
+      } 
     }
   }
   return(output)
@@ -108,6 +117,7 @@ edge <- function(g){
 #to check whether its edge data frame is symmetric
 is_undirected <- function(g){
   edges <- edge(g)
+  if (length(nrow(edges))>0)
   for(i in 1:nrow(edges)){
     istart <- edges[i,]$start
     iend <- edges[i,]$end
@@ -123,23 +133,97 @@ is_undirected <- function(g){
 is_isomorphic = function(g1, g2){
   if(length(g1) != length(g2)){
     stop("Two graphs do not have same number of vertices")
-  }
-  for(i in length(g1)){
-    if(names(g1[i]) != names(g2[i])){
-      stop("Name of vertices are not the same")
-    if(length(g1[[i]]) != length(g2[[i]])){
-      stop("Different number of edges/weights")
-    }
-    }
-  }
-  
+  } 
+  for(g1V in 1:length(g1)){
+    if(!(TRUE %in% (names(g1[g1V]) == names(g2)))){
+      stop("Name of vertices are not the same")}
+      g2V = which(names(g1[g1V]) == names(g2))
+      if(length(unlist(g1[[g1V]])) != length(unlist(g2[[g2V]]))){
+          stop("Vertices do not have the same number of edges")
+        } 
+      for(k in 1:(length(unlist(g1[[g1V]])))/2){
+        g1V2 = g1[[g1V]]$edges[k]
+        g2V2 = which(names(g1[g1V2]) == names(g2))
+        if(length(!(g2V2 %in% g2[[g2V]]$edges))>0)
+        if(!(g2V2 %in% g2[[g2V]]$edges)){
+          stop("Graphs are not isomorphic")}
+        else return("Pass")
+      } 
+    } 
 }
+ # will search for the ith vertex name of g1 in g2 #
+      # so if the jth vertex of g2 has the same name as #
+      # the ith vertex name in g1, it will return a logical #
+      # vector where the jth element is TRUE #
+      # So if TRUE is not in that vector # 
+      # R will stop running the function #
+      # and return the error message #
+      # that the vertices do not have the same names #
+# since g1[i] == names(g2) will return a logical vector #
+      # with one entry that is true #
+      # we can use which() to tell us which element it is #
+# unlisting each vertex of a graph will give us # 
+      # the the number of edges and the number of weights #
+      # so if there are n edges, and n corresponding weights #
+      # the number we will get back is 2n # 
+      # finding the length of a vertex from g1 and comparing #
+      # it to the length of the same name vertex in g2 # 
+      # will tell us if they have the same number of edges #
+      # if they don't, an error message will appear #
+
+    # is_undirected already tells me that each vertex's directed edge #
+    # has a corresponding edge with the same weight coming back #
+
+    # All I have to do, is figure out if each g1's vectors are going #
+    # to the same vectors g2's vectors are going to #
+# we already know that ith vertex of g1 and cth vertex of g1 #
+      # are connected with an undirected edge #
+      # earlier, we made sure that each vertex in g1 #
+      # has a matching one (j) in g2 with the same name #
+      # the dth vertex in g2 has the same name as cth in g1 #
+      # if d is not in the edges vector for the jth vertex #
+      # it means that although i connects to c in g1 #
+      # the vertex with the same name, j does not connect to #
+      # d which has the same name as c in g2 #
+
 
 #This function is for taking difference between two data frames
 diff_df <- function(df1,df2,...){
   expr <- paste("subset(df1,", paste(sapply(names(df1), function(x){paste("!(", x, " %in% df2$", x, ")", sep="")}), collapse=" | "), ")")
   eval(parse(text=expr))
 }
+
+
+#is_connected function
+is_connected <- function(g, v1, v2) {
+    edges <- edge(g)
+    return(is_connected_helper(edges, v1, v2, c())) 
+    # call up is_connected_helper, to use the "seen" array : this is to prevent infinite loops
+}
+
+is_connected_helper <- function(edges, v1, v2, seen) {
+  #"seen" array denotes the vertices that I've already passed 
+    if (length(seen) > 0) { #loop continues even when seen =0..weird
+        for (i in 1:length(seen)) {
+            if (v1 == seen[i]) {
+                return(FALSE) # return FALSE if we've already passed the "seen" vector with our v1
+            }
+        }
+    }
+    seen <- c(v1, seen) # insert v1 in the "seen" array
+    for (i in 1:nrow(edges)) {
+        istart <- edges[i,1] # start column vector
+        iend <- edges[i,2] #end column vector
+        if (istart == v1 & (iend == v2 | is_connected_helper(edges, iend, v2, seen))) { 
+        #1) if edge start is v1 and edge end is v2 
+        #  or
+        #2) if edge start is v1 and edge end is some other vertex other than v2 
+          return(TRUE)
+        }
+    }
+    return(FALSE)
+}
+
 
 #shortest path
 shortest_path <- function(g,v1,v2){
@@ -185,16 +269,17 @@ shortest_path <- function(g,v1,v2){
 
 
 
+
 #minimum spanning tree
 min_span_tree <- function(g){
   if(!is_valid(g)){
     stop("Please input a valid graph.")
   }
-  
+
   if(!is_undirected){
     stop("Please input an undirected graph")
   }
-  
+
   edges <- edge(g)
   #Remove redundancies for the edge table of an Undirected graph
   edges <- edges[edges$start < edges$end,]
@@ -206,7 +291,7 @@ min_span_tree <- function(g){
   #   while(!is_connected_graph(MST)){
   #     #keep adding the minimal edge to MST
   #   }
-  
+
   #The following code will apply Prim's Algorithm
   edges <- edges[order(edges$weight,edges$start,edges$end),]
   MST <- edges[1,]
@@ -221,10 +306,5 @@ min_span_tree <- function(g){
     MST <- rbind(MST,setNames(as.list(neighbor[1,]), names(MST)))
     vertices <- list(MST$start,MST$end)
   }
-  
-
-
 ```
-
-
 
