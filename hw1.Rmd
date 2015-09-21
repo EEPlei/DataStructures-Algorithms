@@ -283,7 +283,7 @@ min_span_tree <- function(g){
 
   edges <- edge(g)
   #Remove redundancies for the edge table of an Undirected graph
-  edges <- edges[edges$start < edges$end,]
+  edges <- edge[edges$start < edges$end,]
   #   #The following code will apply Kruskal's Algorithm
   #   #However I find Kruskal's Algorithm is hard to implement
   #   edges <- edges[order(edges$weight,edges$start,edges$end),]
