@@ -1,5 +1,3 @@
-Homework 1 - Team 4 Duke Dinosaurs
-========================================================
 ```{r}
 #Visualize Graph
 #First we want to start off with a standard list function to help us transition to the "edge" function below
@@ -141,6 +139,41 @@ is_isomorphic = function(g1, g2){
       } 
     } 
 }
+ # will search for the ith vertex name of g1 in g2 #
+      # so if the jth vertex of g2 has the same name as #
+      # the ith vertex name in g1, it will return a logical #
+      # vector where the jth element is TRUE #
+      # So if TRUE is not in that vector # 
+      # R will stop running the function #
+      # and return the error message #
+      # that the vertices do not have the same names #
+# since g1[i] == names(g2) will return a logical vector #
+      # with one entry that is true #
+      # we can use which() to tell us which element it is #
+# unlisting each vertex of a graph will give us # 
+      # the the number of edges and the number of weights #
+      # so if there are n edges, and n corresponding weights #
+      # the number we will get back is 2n # 
+      # finding the length of a vertex from g1 and comparing #
+      # it to the length of the same name vertex in g2 # 
+      # will tell us if they have the same number of edges #
+      # if they don't, an error message will appear #
+      
+    # is_undirected already tells me that each vertex's directed edge #
+    # has a corresponding edge with the same weight coming back #
+      
+    # All I have to do, is figure out if each g1's vectors are going #
+    # to the same vectors g2's vectors are going to #
+# we already know that ith vertex of g1 and cth vertex of g1 #
+      # are connected with an undirected edge #
+      # earlier, we made sure that each vertex in g1 #
+      # has a matching one (j) in g2 with the same name #
+      # the dth vertex in g2 has the same name as cth in g1 #
+      # if d is not in the edges vector for the jth vertex #
+      # it means that although i connects to c in g1 #
+      # the vertex with the same name, j does not connect to #
+      # d which has the same name as c in g2 #
+
 
 #This function is for taking difference between two data frames
 diff_df <- function(df1,df2,...){
@@ -209,9 +242,9 @@ shortest_path <- function(g,v1,v2){
     newvert <- c(vert,Inf,NULL)
     vinfo <- rbind(vinfo,setNames(as.list(newvert), names(vinfo)))
   }
-  
+
   vinfo[vinfo$v == v1,]$dist <- 0
-  
+
   while(!is.null(unvisited)){
     temp <- vinfo[vinfo$v %in% univisted,]
     u <- temp[temp$dist == min(temp$dist),][1,]$v   #vertex in unvisited with min dist[u]  
@@ -219,7 +252,7 @@ shortest_path <- function(g,v1,v2){
       return(c())
     }
     unvisited <- unvisited[unvisited != u]          #remove u from unvisited
-    
+
     for(vert in edges[edges$start == u,]$end){      #for each neighbor u can go to
       d <- vinfo[vinfo$v == u,]$dist + edges[edges$start == u & edges$end == vert,]weight
       if(d < dist[vert]){                           # A shorter path to vert has been found
@@ -234,7 +267,7 @@ shortest_path <- function(g,v1,v2){
     path <- c(path,vinfo[vinfo$v == vert,]$prev)
     vert <- vinfo[vinfo$v == vert,]$prev
   }
-  
+
   return(rev(path))
 }
 
@@ -246,11 +279,11 @@ min_span_tree <- function(g){
   if(!is_valid(g)){
     stop("Please input a valid graph.")
   }
-  
+
   if(!is_undirected){
     stop("Please input an undirected graph")
   }
-  
+
   edges <- edge(g)
   #Remove redundancies for the edge table of an Undirected graph
   edges <- edges[edges$start < edges$end,]
@@ -262,7 +295,7 @@ min_span_tree <- function(g){
   #   while(!is_connected_graph(MST)){
   #     #keep adding the minimal edge to MST
   #   }
-  
+
   #The following code will apply Prim's Algorithm
   edges <- edges[order(edges$weight,edges$start,edges$end),]
   MST <- edges[1,]
@@ -277,10 +310,5 @@ min_span_tree <- function(g){
     MST <- rbind(MST,setNames(as.list(neighbor[1,]), names(MST)))
     vertices <- list(MST$start,MST$end)
   }
-  
-
-
 ```
-
-
 
