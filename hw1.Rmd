@@ -74,7 +74,7 @@ is_valid <- function(g){
 #Its third column stores the edge length
 edge <- function(g){
   # function where input is 'g' #
-  output <- data.frame(start = numeric(), end = numeric(), weight = numeric())
+  output <- data.frame(start = numeric(), end = numeric(), weight = numeric(),stringsAsFactors =F)
   # makes an empty dataframe. where the horizontal header has "start", "end", and "weight" # 
   # numeric() creates a zero vector for each column #
   for(i in 1:length(g)){
@@ -141,7 +141,6 @@ diff_df <- function(df1,df2,...){
   eval(parse(text=expr))
 }
 
-
 #shortest path
 shortest_path <- function(g,v1,v2){
   if(!is_valid(g)){
@@ -149,41 +148,40 @@ shortest_path <- function(g,v1,v2){
   }
   #The following code will apply Dijkstra's Algorithm
   edges <- edge(g)
-  vinfo <- data.frame(v = character(),dist = numeric(),prev = numeric())
-  unvisited <- c(names(g))
+  vinfo <- data.frame(v = character(),dist = numeric(),prev = character(),stringsAsFactors =F)
+  unvisited <- names(g)
   for(vert in unvisited){
-    newvert <- c(vert,Inf,NULL)
+    newvert <- list(as.character(vert),Inf,"undefined")
     vinfo <- rbind(vinfo,setNames(as.list(newvert), names(vinfo)))
   }
   
   vinfo[vinfo$v == v1,]$dist <- 0
   
-  while(!is.null(unvisited)){
-    temp <- vinfo[vinfo$v %in% univisted,]
+  while(length(unvisited)!=0){
+    temp <- vinfo[vinfo$v %in% unvisited,]
     u <- temp[temp$dist == min(temp$dist),][1,]$v   #vertex in unvisited with min dist[u]  
-    if(temp[temp$v == u,]$dist == Inf){
-      return(c())
-    }
+     if(temp[temp$v == u,]$dist == Inf){
+       return(c())
+     }
     unvisited <- unvisited[unvisited != u]          #remove u from unvisited
     
     for(vert in edges[edges$start == u,]$end){      #for each neighbor u can go to
-      d <- vinfo[vinfo$v == u,]$dist + edges[edges$start == u & edges$end == vert,]weight
-      if(d < dist[vert]){                           # A shorter path to vert has been found
+      d <- vinfo[vinfo$v == u,]$dist + edges[edges$start == u & edges$end == vert,]$weight
+      if(d < vinfo[vinfo$v == vert,]$dist){                           # A shorter path to vert has been found
         vinfo[vinfo$v == vert,]$dist <- d
         vinfo[vinfo$v == vert,]$prev <- u
       }
     }
   }
-  path <- c(v2)
+  path <- v2
   vert <- v2
-  while(!is.null(vinfo[vinfo$v == vert,]$prev)){
+  while(vinfo[vinfo$v == vert,]$prev != "undefined"){
     path <- c(path,vinfo[vinfo$v == vert,]$prev)
     vert <- vinfo[vinfo$v == vert,]$prev
   }
   
   return(rev(path))
 }
-
 
 
 
