@@ -203,7 +203,9 @@ is_connected_helper <- function(edges, v1, v2, seen) {
         istart <- edges[i,1] # start column vector
         iend <- edges[i,2] #end column vector
         if (istart == v1 & (iend == v2 | is_connected_helper(edges, iend, v2, seen))) { 
-        #if edge start is v1 and edge end is v2 or if edge start is v1 and edge end is some other vertex other than v2 
+        #1) if edge start is v1 and edge end is v2 
+        #  or
+        #2) if edge start is v1 and edge end is some other vertex other than v2 
           return(TRUE)
         }
     }
