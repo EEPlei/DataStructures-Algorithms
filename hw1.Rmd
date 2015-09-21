@@ -149,11 +149,20 @@ is_connected <- function(g, v1, v2){
   #if(!is_valid(g)){
   #  stop("Please input a valid graph.")
   #}
-  findv1 = 0
-  findv2 = 0
-  flag = 0
-}
-  for(i in 1:length(g)){
+  
+  #check if v1 and v2 are in the graph 
+  edges <- edge(g)
+  for(i in 1:nrow(edges)){
+    istart <- edges[i,]$start #build array of the start vertices
+    iend <- edges[i,]$end #build array of the end vertices 
+    if(v1!=start | v1!=end) #compare whether v1 is in either the start or the end array
+      return("v1 is not in the graph")
+    if(v2!=start[i] | v2!=end[i]) #compare whether v2 is in either the start or the end array
+      return("v2 is not in the graph")
+    }
+  
+  
+for(i in 1:length(g)){
     if()
   } 
   edges <- edge(g)
