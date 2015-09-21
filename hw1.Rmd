@@ -1,3 +1,4 @@
+```{r}
 #Visualize Graph
 #First we want to start off with a standard list function to help us transition to the "edge" function below
 ##STILL NEED TO WORK ON WHERE TO PLACE DIRECTED AND UNDIRECTED EDGES
@@ -305,3 +306,4 @@ min_span_tree <- function(g){
     MST <- rbind(MST,setNames(as.list(neighbor[1,]), names(MST)))
     vertices <- list(MST$start,MST$end)
   }
+```
