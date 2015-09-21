@@ -274,35 +274,28 @@ min_span_tree <- function(g){
   if(!is_valid(g)){
     stop("Please input a valid graph.")
   }
-
+  
   if(!is_undirected(g)){
     stop("Please input an undirected graph")
   }
-
+  
   edges <- edge(g)
   #Remove redundancies for the edge table of an Undirected graph
-  edges <- edge[edges$start < edges$end,]
-  #   #The following code will apply Kruskal's Algorithm
-  #   #However I find Kruskal's Algorithm is hard to implement
-  #   edges <- edges[order(edges$weight,edges$start,edges$end),]
-  #   MST <- 
-  #   
-  #   while(!is_connected_graph(MST)){
-  #     #keep adding the minimal edge to MST
-  #   }
-
+  edges <- edges[edges$start < edges$end,]
   #The following code will apply Prim's Algorithm
   edges <- edges[order(edges$weight,edges$start,edges$end),]
   MST <- edges[1,]
-  vertices <- list(MST$start,MST$end) #record all the vertices in MST
-  while(length(MST) < length(g) - 1){
+  vertices <- c(MST$start,MST$end) #record all the vertices in MST
+  while(nrow(MST) < length(g) - 1){
     neighbor <- edges[(edges$start %in% vertices | edges$end %in% vertices) & (!(edges$start %in% vertices) | !(edges$end %in% vertices)),]
-    neighbor <- diff_df(neigbor,MST)
+    #neighbor <- diff_df(neigbor,MST)
     #protection for non-connected components
     if(nrow(neighbor) == 0){
       stop("The input graph is not connected.")
     }
     MST <- rbind(MST,setNames(as.list(neighbor[1,]), names(MST)))
-    vertices <- list(MST$start,MST$end)
-  }}
+    vertices <- c(vertices,MST$start,MST$end)
+  }
+  return(MST)
+}
 ```
