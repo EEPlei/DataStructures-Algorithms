@@ -1,4 +1,3 @@
-```{r}
 #Visualize Graph
 #First we want to start off with a standard list function to help us transition to the "edge" function below
 ##STILL NEED TO WORK ON WHERE TO PLACE DIRECTED AND UNDIRECTED EDGES
@@ -74,7 +73,7 @@ is_valid <- function(g){
 #Its third column stores the edge length
 edge <- function(g){
   # function where input is 'g' #
-  output <- data.frame(start = numeric(), end = numeric(), weight = numeric(),stringsAsFactors =F)
+  output <- data.frame(start = numeric(), end = numeric(), weight = numeric())
   # makes an empty dataframe. where the horizontal header has "start", "end", and "weight" # 
   # numeric() creates a zero vector for each column #
   for(i in 1:length(g)){
@@ -225,6 +224,7 @@ is_connected_helper <- function(edges, v1, v2, seen) {
 }
 
 
+
 #shortest path
 shortest_path <- function(g,v1,v2){
   if(!is_valid(g)){
@@ -232,38 +232,38 @@ shortest_path <- function(g,v1,v2){
   }
   #The following code will apply Dijkstra's Algorithm
   edges <- edge(g)
-  vinfo <- data.frame(v = character(),dist = numeric(),prev = character(),stringsAsFactors =F)
-  unvisited <- names(g)
+  vinfo <- data.frame(v = character(),dist = numeric(),prev = numeric())
+  unvisited <- c(names(g))
   for(vert in unvisited){
-    newvert <- list(as.character(vert),Inf,"undefined")
+    newvert <- c(vert,Inf,NULL)
     vinfo <- rbind(vinfo,setNames(as.list(newvert), names(vinfo)))
   }
-  
+
   vinfo[vinfo$v == v1,]$dist <- 0
-  
-  while(length(unvisited)!=0){
-    temp <- vinfo[vinfo$v %in% unvisited,]
+
+  while(!is.null(unvisited)){
+    temp <- vinfo[vinfo$v %in% univisted,]
     u <- temp[temp$dist == min(temp$dist),][1,]$v   #vertex in unvisited with min dist[u]  
-     if(temp[temp$v == u,]$dist == Inf){
-       return(c())
-     }
+    if(temp[temp$v == u,]$dist == Inf){
+      return(c())
+    }
     unvisited <- unvisited[unvisited != u]          #remove u from unvisited
-    
+
     for(vert in edges[edges$start == u,]$end){      #for each neighbor u can go to
-      d <- vinfo[vinfo$v == u,]$dist + edges[edges$start == u & edges$end == vert,]$weight
-      if(d < vinfo[vinfo$v == vert,]$dist){                           # A shorter path to vert has been found
+      d <- vinfo[vinfo$v == u,]$dist + edges[edges$start == u & edges$end == vert,]weight
+      if(d < dist[vert]){                           # A shorter path to vert has been found
         vinfo[vinfo$v == vert,]$dist <- d
         vinfo[vinfo$v == vert,]$prev <- u
       }
     }
   }
-  path <- v2
+  path <- c(v2)
   vert <- v2
-  while(vinfo[vinfo$v == vert,]$prev != "undefined"){
+  while(!is.null(vinfo[vinfo$v == vert,]$prev)){
     path <- c(path,vinfo[vinfo$v == vert,]$prev)
     vert <- vinfo[vinfo$v == vert,]$prev
   }
-  
+
   return(rev(path))
 }
 
@@ -306,5 +306,3 @@ min_span_tree <- function(g){
     MST <- rbind(MST,setNames(as.list(neighbor[1,]), names(MST)))
     vertices <- list(MST$start,MST$end)
   }
-```
-

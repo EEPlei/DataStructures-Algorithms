@@ -1,0 +1,147 @@
+Homework 1 - Team 4 Duke Dinosaurs
+========================================================
+```{r}
+#Visualize Graph
+#First we want to start off with a standard list function to help us transition to the "edge" function below
+##STILL NEED TO WORK ON WHERE TO PLACE DIRECTED AND UNDIRECTED EDGES
+Team4Graph = list(A = list(edges   = c(2L, 5L, 6L),
+                           weights = c(6, 1, 3)),
+                  B = list(edges   = c(1L, 3L, 6L),
+                           weights = c(6, 4, 13)),
+                  C = list(edges   = c(2L, 6L),
+                           weights = c(4, 7 )),
+                  D = list(edges   = c(5L, 6L),
+                           weights = c(10, 12 )),
+                  E = list(edges   = c(1L, 4L, 6L),
+                           weights = c(1, 10, 5)),
+                  F = list(edges   = c(1L, 2L, 3L, 4L, 5L),
+                           weights = c(3, 13, 7, 12, 5))
+                  )
+str(Team4Graph)
+
+
+g <- Team4Graph
+
+
+#This function is for checking if the input graph is valid
+is_valid <- function(g){
+  if(typeof(g)!="list")
+    return(FALSE)
+  for(i in 1:length(g)){
+    if(typeof(g[[i]])!="list")
+      return(FALSE)
+  }
+  if(length(g)!=length(unique(g))
+    return(FALSE)
+  
+}
+
+
+
+#g <- Team4Graph
+
+
+
+#edge
+#edge function will return a data frame which is a table summarizing all edges.
+#Its first column stores the starting vertices and its second column stores the ending vertics
+#Its third column stores the edge length
+edge <- function(g){
+  # function where input is 'g' #
+  output <- data.frame(start = numeric(), end = numeric(), weight = numeric())
+  for(i in 1:length(g)){
+    cur <- g[i]
+    curvec <- unlist(cur)
+    num_to <- length(curvec)/2 #number of vertices the current vertex can go to
+    if(num_to==0)
+      next
+    for(j in 1:num_to){
+      newedge <- c(i,curvec[j],curvec[j+num_to])
+      output <- rbind(output,setNames(as.list(newedge), names(output)))
+    }
+  }
+  return(output)
+}
+
+#is_undirected
+#to check whether its edge data frame is symmetric
+is_undirected <- function(g){
+  edges <- edge(g)
+  for(i in 1:nrow(edges)){
+    istart <- edges[i,]$start
+    iend <- edges[i,]$end
+    iweight <- edges[i,]$weight
+    if(is.null(edges[edges$start == iend & edges$end == istart,]$weight))
+      return(FALSE)
+    if(edges[edges$start == iend & edges$end == istart,]$weight != iweight)
+      return(FALSE)
+  } 
+  return(TRUE)
+}
+
+#shortest path
+shortest_path <- function(g,v1,v2){
+  if(!is_valid(g)){
+    stop("Please input a valid graph.")
+  }
+  
+  #The following code will apply Dijkstra's Algorithm
+  
+  return()
+}
+
+# #Is_connected_graph
+# #This function checks whether the graph is a connected entity as a whole
+# is_connected_graph<-function(g){
+#   
+# }
+
+#This function is for taking difference between two data frames
+diff_df <- function(df1,df2,...){
+  expr <- paste("subset(df1,", paste(sapply(names(df1), function(x){paste("!(", x, " %in% df2$", x, ")", sep="")}), collapse=" | "), ")")
+  eval(parse(text=expr))
+}
+
+#minimum spanning tree
+min_span_tree <- function(g){
+  if(!is_valid(g)){
+    stop("Please input a valid graph.")
+  }
+  
+  if(!is_undirected){
+    stop("Please input an undirected graph")
+  }
+  
+  edges <- edge(g)
+  #Remove redundancies for the edge table of an Undirected graph
+  edges <- edges[edges$start < edges$end,]
+  #   #The following code will apply Kruskal's Algorithm
+  #   #However I find Kruskal's Algorithm is hard to implement
+  #   edges <- edges[order(edges$weight,edges$start,edges$end),]
+  #   MST <- 
+  #   
+  #   while(!is_connected_graph(MST)){
+  #     #keep adding the minimal edge to MST
+  #   }
+  
+  #The following code will apply Prim's Algorithm
+  edges <- edges[order(edges$weight,edges$start,edges$end),]
+  MST <- edges[1,]
+  vertices <- list(MST$start,MST$end) #record all the vertices in MST
+  while(length(MST) < length(g) - 1){
+    neighbor <- edges[(edges$start %in% vertices | edges$end %in% vertices) & (!(edges$start %in% vertices) | !(edges$end %in% vertices)),]
+    neighbor <- diff_df(neigbor,MST)
+    #protection for non-connected components
+    if(nrow(neigb) == 0){
+      stop("The input graph is not connected.")
+    }
+    MST <- rbind(MST,setNames(as.list(neighbor[1,]), names(MST)))
+    vertices <- list(MST$start,MST$end)
+  }
+  
+
+
+```
+
+
+
