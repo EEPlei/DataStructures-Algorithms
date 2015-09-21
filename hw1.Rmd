@@ -144,6 +144,7 @@ is_isomorphic = function(g1, g2){
       for(k in 1:(length(unlist(g1[[g1V]])))/2){
         g1V2 = g1[[g1V]]$edges[k]
         g2V2 = which(names(g1[g1V2]) == names(g2))
+        if(length(!(g2V2 %in% g2[[g2V]]$edges))>0)
         if(!(g2V2 %in% g2[[g2V]]$edges)){
           stop("Graphs are not isomorphic")}
         else return("Pass")
