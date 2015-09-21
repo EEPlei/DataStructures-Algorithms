@@ -123,16 +123,23 @@ is_undirected <- function(g){
 is_isomorphic = function(g1, g2){
   if(length(g1) != length(g2)){
     stop("Two graphs do not have same number of vertices")
-  }
-  for(i in length(g1)){
-    if(names(g1[i]) != names(g2[i])){
-      stop("Name of vertices are not the same")
-    if(length(g1[[i]]) != length(g2[[i]])){
-      stop("Different number of edges/weights")
-    }
-    }
-  }
-  
+  } 
+  for(i in 1:length(g1)){
+    if(!(TRUE %in% (names(g1[i]) == names(g2)))){
+      stop("Name of vertices are not the same")}
+      j = which(names(g1[i]) == names(g2))
+      if(length(unlist(g1[[i]])) != length(unlist(g2[[j]]))){
+          stop("Vertices do not have the same number of edges")
+        } 
+      for(k in 1:(length(unlist(g1[[i]])))/2){
+        c = g1[[i]]$edges[k]
+        d = which(names(g1[c]) == names(g2))
+        j = which(names(g1[i]) == names(g2))
+        if(FALSE == (d %in% g2[[j]]$edges)){
+          stop("Graphs are not isomorphic")}
+        else return("Pass")
+      } 
+    } 
 }
 
 #This function is for taking difference between two data frames
