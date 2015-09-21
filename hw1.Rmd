@@ -182,51 +182,31 @@ diff_df <- function(df1,df2,...){
 }
 
 
-
 #is_connected function
-is_connected <- function(g, v1, v2){
-  #ensure if the graph is valid or not
-  #if(!is_valid(g)){
-  #  stop("Please input a valid graph.")
-  #}
-  
-  #check if v1 and v2 are in the graph 
-  edges <- edge(g)
-  for(i in 1:nrow(edges)){
-    istart <- edges[i,]$start #build array of the start vertices
-    iend <- edges[i,]$end #build array of the end vertices 
-    if(v1!=start | v1!=end) #compare whether v1 is in either the start or the end array
-      return("v1 is not in the graph")
-    if(v2!=start[i] | v2!=end[i]) #compare whether v2 is in either the start or the end array
-      return("v2 is not in the graph")
-    }
-  
-  
-#is_connected function
-is_connected <- function(g, v1, v2){
-  #ensure if the graph is valid or not
-  #if(!is_valid(g)){
-  #  stop("Please input a valid graph.")
-  #}
-  
-  #check if v1 and v2 are in the graph 
-  edges <- edge(g)
-  for(i in 1:nrow(edges)){
-    istart <- edges[i,1] #build array of the start vertices
-    iend <- edges[i,2] #build array of the end vertices 
-    if(istart == v1){ #if the start is v1 and end is v2, return TRUE
-      if(iend == v2){
-        return(TRUE)
-      } else  {
-        if (is_connected(g, iend, v2)){ #displays the condition where v1 connects to iend
-          return(TRUE)
-        }
-      }
-    }
-    return(FALSE)
-  }
+is_connected <- function(g, v1, v2) {
+    edges <- edge(g)
+    return(is_connected_helper(edges, v1, v2, c())) # call up is_connected_helper, to use the "seen" array : this is to prevent infinite loops
 }
 
+is_connected_helper <- function(edges, v1, v2, seen) { #"seen" array denotes the vertices that I've already passed 
+    if (length(seen) > 0) { #loop continues even when seen =0..weird
+        for (i in 1:length(seen)) {
+            if (v1 == seen[i]) {
+                return(FALSE) # return FALSE if we've already passed the "seen" vector with our v1
+            }
+        }
+    }
+    seen <- c(v1, seen) # insert v1 in the "seen" array
+    for (i in 1:nrow(edges)) {
+        istart <- edges[i,1] # start column vector
+        iend <- edges[i,2] #end column vector
+        if (istart == v1 & (iend == v2 | is_connected_helper(edges, iend, v2, seen))) { #if edge start is v1 and edge end is v2 or if edge start is v1 and edge end is some other vertex other than v2 
+          return(TRUE)
+        }
+    }
+    return(FALSE)
+}
+  
 
 
 #shortest path
