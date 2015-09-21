@@ -185,10 +185,12 @@ diff_df <- function(df1,df2,...){
 #is_connected function
 is_connected <- function(g, v1, v2) {
     edges <- edge(g)
-    return(is_connected_helper(edges, v1, v2, c())) # call up is_connected_helper, to use the "seen" array : this is to prevent infinite loops
+    return(is_connected_helper(edges, v1, v2, c())) 
+    # call up is_connected_helper, to use the "seen" array : this is to prevent infinite loops
 }
 
-is_connected_helper <- function(edges, v1, v2, seen) { #"seen" array denotes the vertices that I've already passed 
+is_connected_helper <- function(edges, v1, v2, seen) {
+  #"seen" array denotes the vertices that I've already passed 
     if (length(seen) > 0) { #loop continues even when seen =0..weird
         for (i in 1:length(seen)) {
             if (v1 == seen[i]) {
@@ -200,7 +202,8 @@ is_connected_helper <- function(edges, v1, v2, seen) { #"seen" array denotes the
     for (i in 1:nrow(edges)) {
         istart <- edges[i,1] # start column vector
         iend <- edges[i,2] #end column vector
-        if (istart == v1 & (iend == v2 | is_connected_helper(edges, iend, v2, seen))) { #if edge start is v1 and edge end is v2 or if edge start is v1 and edge end is some other vertex other than v2 
+        if (istart == v1 & (iend == v2 | is_connected_helper(edges, iend, v2, seen))) { 
+        #if edge start is v1 and edge end is v2 or if edge start is v1 and edge end is some other vertex other than v2 
           return(TRUE)
         }
     }
