@@ -89,6 +89,9 @@ edge <- function(g){
       newedge <- c(i,curvec[j],curvec[j+num_to])
       output <- rbind(output,setNames(as.list(newedge), names(output)))
     }
+    #convert numbers to letters
+    output$start = lapply(output$start,chartr,old = "123456789",new = "ABCDEFGHI")
+    output$end = lapply(output$end,chartr,old = "123456789",new = "ABCDEFGHI")
   }
   return(output)
 }
