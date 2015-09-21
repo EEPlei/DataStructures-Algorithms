@@ -128,18 +128,18 @@ is_isomorphic = function(g1, g2){
   if(length(g1) != length(g2)){
     stop("Two graphs do not have same number of vertices")
   } 
-  for(i in 1:length(g1)){
-    if(!(TRUE %in% (names(g1[i]) == names(g2)))){
+  for(g1V in 1:length(g1)){
+    if(!(TRUE %in% (names(g1[g1V]) == names(g2)))){
       stop("Name of vertices are not the same")}
-      j = which(names(g1[i]) == names(g2))
-      if(length(unlist(g1[[i]])) != length(unlist(g2[[j]]))){
+      g2V = which(names(g1[g1V]) == names(g2))
+      if(length(unlist(g1[[g1V]])) != length(unlist(g2[[g2V]]))){
           stop("Vertices do not have the same number of edges")
         } 
-      for(k in 1:(length(unlist(g1[[i]])))/2){
-        c = g1[[i]]$edges[k]
-        d = which(names(g1[c]) == names(g2))
-        j = which(names(g1[i]) == names(g2))
-        if(FALSE == (d %in% g2[[j]]$edges)){
+      for(k in 1:(length(unlist(g1[[g1V]])))/2){
+        g1V2 = g1[[g1V]]$edges[k]
+        g2V2 = which(names(g1[g1V2]) == names(g2))
+        if(d == integer(0))
+        if(!(g2V2 %in% g2[[g2V]]$edges)){
           stop("Graphs are not isomorphic")}
         else return("Pass")
       } 
