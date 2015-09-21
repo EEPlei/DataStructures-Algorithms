@@ -64,7 +64,6 @@ is_valid <- function(g){
   }
   return(TRUE)
 }
-
 #g <- Team4Graph
 
 
@@ -118,6 +117,7 @@ edge <- function(g){
 #to check whether its edge data frame is symmetric
 is_undirected <- function(g){
   edges <- edge(g)
+  if (length(nrow(edges))>0)
   for(i in 1:nrow(edges)){
     istart <- edges[i,]$start
     iend <- edges[i,]$end
