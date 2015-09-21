@@ -276,7 +276,7 @@ min_span_tree <- function(g){
     stop("Please input a valid graph.")
   }
 
-  if(!is_undirected){
+  if(!is_undirected(g)){
     stop("Please input an undirected graph")
   }
 
@@ -305,5 +305,5 @@ min_span_tree <- function(g){
     }
     MST <- rbind(MST,setNames(as.list(neighbor[1,]), names(MST)))
     vertices <- list(MST$start,MST$end)
-  }
+  }}
 ```
