@@ -1,4 +1,8 @@
 ```{r}
+source("graph.r")
+```
+
+```{r}
 #Visualize Graph
 #First we want to start off with a standard list function to help us transition to the "edge" function below
 ##STILL NEED TO WORK ON WHERE TO PLACE DIRECTED AND UNDIRECTED EDGES
