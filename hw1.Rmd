@@ -55,6 +55,8 @@ is_valid <- function(g){
       return(FALSE)
     if(all(names(g[[i]]) != c("edges","weights")))
       return(FALSE)
+    if(is.na(g[[i]]$edges) | is.na(g[[i]]$weights))
+      return(FALSE)
     if(typeof(g[[i]]$edges) != "integer" & typeof(g[[i]]$edges) != "NULL")
       return(FALSE)
     if(class(g[[i]]$weights) != "numeric" & class(g[[i]]$weights) != "NULL")
