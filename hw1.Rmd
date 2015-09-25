@@ -307,4 +307,8 @@ min_span_tree <- function(g){
   }
   return(MST)
 }
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 4e76c5b26869db639dceea767eedfe1e68ad3e9f

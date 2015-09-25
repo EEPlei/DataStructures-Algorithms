@@ -1,0 +1,27 @@
+is_valid <- function(g){
+  if(typeof(g)!="list")
+    return(FALSE)
+  if(length(g) != length(unique(names(g))))
+    return(FALSE)
+  for(i in 1:length(g)){
+    if(typeof(g[[i]]) != "list")
+      return(FALSE)
+    if(all(names(g[[i]]) != c("edges","weights")))
+      return(FALSE)
+    if(is.na(g[[i]]$edges) | is.na(g[[i]]$weights))
+      return(FALSE)
+    if(typeof(g[[i]]$edges) != "integer" & typeof(g[[i]]$edges) != "NULL")
+      return(FALSE)
+    if(class(g[[i]]$weights) != "numeric" & class(g[[i]]$weights) != "NULL")
+      return(FALSE)
+    if(any(g[[i]]$edges>length(g)) | any(g[[i]]$edges<1))
+      return(FALSE)
+    if(any(g[[i]]$weights <= 0))
+      return(FALSE)
+    if(length(g[[i]]$edges) != length(g[[i]]$weights))
+      return(FALSE)
+    if(length(g[[i]]$edges) != length(unique(g[[i]]$edges)))
+      return(FALSE)
+  }
+  return(TRUE)
+}
