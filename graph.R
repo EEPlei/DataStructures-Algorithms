@@ -18,6 +18,8 @@ is_valid <- function(g){
       return(FALSE)
     if(length(g[[i]]$edges) != length(g[[i]]$weights))
       return(FALSE)
+    if(length(g[[i]]$edges) != length(unique(g[[i]]$edges)))
+      return(FALSE)
   }
   return(TRUE)
 }
