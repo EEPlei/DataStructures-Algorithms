@@ -168,22 +168,6 @@ is_connected(graph1, "A", "B")
 ```
 This should give us TRUE since vertex A connects to vertex B with weight 6. 
 
- 
-
-```{r}
-is_connected(graph1, 1, 2)
-```
-This also gives us a FALSE since 1 and 2 are inputted as the vertices, but we want the vertices inputs to be of character value not numeric value. 
-
-```{r}
-g10 = list(A = list(edges   = c(1L), 
-                      weights = c(1)), 
-             B = list(edges   = c(2L), 
-                      weights = c(1))) 
-is_connected(g10, "A", "B")
-```
-For this case, we will get FALSE because vertex A only connects to itself and vertex B only connects to itself. They don't connect to each other. 
-
 Shortest Path
 
 The purpose of the shortest_path is to find the shortest path between two vertices inside a given graph through the edges. By shortest path, we mean the sum of weights for the edges in the route taken. 
