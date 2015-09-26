@@ -1,7 +1,7 @@
 Team4 Duke Dinosaurs HW 1 Write Up
-
+```{r}
 source("graph.r")
-
+```
 
 is_isomorphic()
 
