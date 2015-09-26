@@ -102,11 +102,11 @@ is_isomorphic <- function(g1, g2){
   df1 = edge(g1) # makes graph1 into dataframe #
   df2 = edge(g2) # makes graph2 into dataframe #
   if(nrow(df1) != nrow(df2)){
-    stop(FALSE)
+    return(FALSE)
   } # compares number of rows #
   if(nrow(df1) == 0){ # graph with empty list for vector #
     if(names(g1) != names(g2)){
-      stop(FALSE)
+      return(FALSE)
     } #compares name of vertex #
     return(TRUE) #if name of vertex matches, same #
   }
@@ -116,19 +116,19 @@ is_isomorphic <- function(g1, g2){
       end <- df1$end[i] # end vertex in graph1 #
       weight <- df1$weight[i] # weight of edge in graph1 #
       if(!(any(start %in% df2$start))){
-        stop(FALSE) 
+        return(FALSE) 
       } # if name of start vertex isn't a starting vertex in graph2, stop #
       index.start = which(start == df2$start)
       # which rows in df2 starts with the same vertex as df1 #
       if(!(any(end == df2$end[index.start]))) {
-        stop(FALSE)
+        return(FALSE)
       } # if name of end vertex isn't a ending vertex of the rows index.start, stop #
       index.end = which(end == df2$end[index.start])
       # which row of index.start ends with the same vertex as df2 #
       # index.end shouldn't be a vector. it should just be a number #
       row.weight = index.start[index.end]
       if(weight != df2$weight[row.weight]){
-        stop(FALSE)
+        return(FALSE)
       }
     }
   } 
