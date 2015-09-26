@@ -216,6 +216,15 @@ is_connected <- function(g, v1, v2) {
   if(is.numeric(v1) | is.numeric(v2)){
     stop("Either v1 or v2 is a numeric value please input a character value")
   }
+  
+  if(!(v1 %in% names(g))){
+    stop("v1 is not in graph")
+  }
+  
+  if(!(v2 %in% names(g))){
+    stop("v2 is not in graph")
+  }
+  
   edges <- edge(g)
   return(is_connected_helper(edges, v1, v2, c())) 
   # call up is_connected_helper, to use the "seen" array : this is to prevent infinite loops
