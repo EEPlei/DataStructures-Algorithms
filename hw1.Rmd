@@ -4,6 +4,7 @@ source("graph.R")
 ```
 is_valid()
 
+Our is_valid() function will test if 
 
 is_undirected()
 

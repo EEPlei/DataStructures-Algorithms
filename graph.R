@@ -15,7 +15,10 @@ edge <- function(g){
       newedge <- c(i,curvec[j],curvec[j+num_to])
       output <- rbind(output,setNames(as.list(newedge), names(output)))
     }
-    #convert numbers to letters
+    # makes a vector where you take the start node, end node, and the weight #
+    # rwo bind the empty dataframe and set the names as the just made vectors #
+    # and the names already assigned to the empty dataframe # 
+    #convert numbers to letters #
     for(m in 1:length(output$start)){
       for(n in 1:length(g)){
         if(output$start[m] == n)
