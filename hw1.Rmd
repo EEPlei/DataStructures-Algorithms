@@ -1,6 +1,6 @@
 Team4 Duke Dinosaurs HW 1 Write Up
 ```{r}
-source("graph.r")
+source("graph.R")
 ```
 
 is_isomorphic()
