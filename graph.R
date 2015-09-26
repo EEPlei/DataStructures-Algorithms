@@ -35,7 +35,30 @@ is_valid <- function(g){
   return(TRUE)
 } 
 
-#is_undirected
+#is_undirected function
+#to check whether its edge data frame is symmetric
+is_undirected <- function(g){
+  
+  if(!is_valid(g)){ #if graph is not valid, return an error
+    stop("Please input a valid graph")
+  }
+  
+  edges <- edge(g)
+  if (nrow(edges)>0) #again the loop runs when the array starts from 0
+    for(i in 1:nrow(edges)){
+      istart <- edges[i,]$start
+      iend <- edges[i,]$end
+      iweight <- edges[i,]$weight
+      if(nrow(edges[edges$start == iend & edges$end == istart,]) == 0)
+        return(FALSE)
+      if(edges[edges$start == iend & edges$end == istart,]$weight != iweight)
+        return(FALSE)
+    } 
+  return(TRUE)
+}
+
+
+
 
 #is_isomorphic
 
