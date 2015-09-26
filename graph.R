@@ -62,6 +62,49 @@ is_undirected <- function(g){
 
 #is_isomorphic
 
+is_isomorphic <- function(graph1, graph2){
+  
+  if(!is_valid(graph1)){
+    stop("Please input a valid graph")
+  } #tests is_valid#
+  if(!is_valid(graph2)){
+    stop("Please input a valid graph")
+  } #tests is_valid#
+  df1 = edge(graph1) # makes graph1 into dataframe #
+  df2 = edge(graph2) # makes graph2 into dataframe #
+  if(nrow(df1) != nrow(df2)){
+    stop("Different Number of Edges")
+  } # compares number of rows #
+  if(nrow(df1) == 0){ # graph with empty list for vector #
+    if(names(g1) != names(g2)){
+      stop("Names of Vertex don't match")
+    } #compares name of vertex #
+    return(TRUE) #if name of vertex matches, same #
+  }
+  if(nrow(df1)>0){
+    for(i in 1:nrow(df1)){
+      start <- df1$start[i] #start vertex in graph1 #
+      end <- df1$end[i] # end vertex in graph1 #
+      weight <- df1$weight[i] # weight of edge in graph1 #
+      if(!(any(start %in% df2$start))){
+        stop("Name of start vertex no match") 
+      } # if name of start vertex isn't a starting vertex in graph2, stop #
+      index.start = which(start == df2$start)
+      # which rows in df2 starts with the same vertex as df1 #
+      if(!(any(end == df2$end[index.start]))) {
+        stop("Vertex doesn't connect to same point")
+      } # if name of end vertex isn't a ending vertex of the rows index.start, stop #
+      index.end = which(end == df2$end[index.start])
+      # which row of index.start ends with the same vertex as df2 #
+      # index.end shouldn't be a vector. it should just be a number #
+      row.weight = index.start[index.end]
+      if(weight != df2$weight[row.weight]){
+        stop("Weight doesn't match")
+      }
+    }
+  } 
+  return(TRUE)
+}  
 
 
 
