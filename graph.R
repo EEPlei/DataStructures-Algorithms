@@ -1,3 +1,32 @@
+#edge function - helper#
+edge <- function(g){
+  # function where input is 'g' #
+  output <- data.frame(start = numeric(), end = numeric(), weight = numeric(),stringsAsFactors =F)
+  # makes an empty dataframe. where the horizontal header has "start", "end", and "weight" # 
+  # numeric() creates a zero vector for each column #
+  for(i in 1:length(g)){
+    cur <- g[i]
+    curvec <- unlist(cur)
+    num_to <- length(curvec)/2 
+    #number of vertices the current vertex goes to #
+    if(num_to==0)
+      next
+    for(j in 1:num_to){
+      newedge <- c(i,curvec[j],curvec[j+num_to])
+      output <- rbind(output,setNames(as.list(newedge), names(output)))
+    }
+    #convert numbers to letters
+    for(m in 1:length(output$start)){
+      for(n in 1:length(g)){
+        if(output$start[m] == n)
+          output$start[m] = replace(output$start[m],,names(g[n]))
+        if(output$end[m] == n)
+          output$end[m] = replace(output$end[m],,names(g[n]))
+      } 
+    }
+  }
+  return(output)
+}
 #is_valid function
 #check if the graph is a list
 #check if the names for every element are all unique
@@ -62,22 +91,22 @@ is_undirected <- function(g){
 
 #is_isomorphic
 
-is_isomorphic <- function(graph1, graph2){
+is_isomorphic <- function(g1, g2){
   
-  if(!is_valid(graph1)){
-    stop("Please input a valid graph")
+  if(!is_valid(g1)){
+    stop("error")
   } #tests is_valid#
-  if(!is_valid(graph2)){
-    stop("Please input a valid graph")
+  if(!is_valid(g2)){
+    stop("error")
   } #tests is_valid#
-  df1 = edge(graph1) # makes graph1 into dataframe #
-  df2 = edge(graph2) # makes graph2 into dataframe #
+  df1 = edge(g1) # makes graph1 into dataframe #
+  df2 = edge(g2) # makes graph2 into dataframe #
   if(nrow(df1) != nrow(df2)){
-    stop("Different Number of Edges")
+    stop(FALSE)
   } # compares number of rows #
   if(nrow(df1) == 0){ # graph with empty list for vector #
     if(names(g1) != names(g2)){
-      stop("Names of Vertex don't match")
+      stop(FALSE)
     } #compares name of vertex #
     return(TRUE) #if name of vertex matches, same #
   }
@@ -87,19 +116,19 @@ is_isomorphic <- function(graph1, graph2){
       end <- df1$end[i] # end vertex in graph1 #
       weight <- df1$weight[i] # weight of edge in graph1 #
       if(!(any(start %in% df2$start))){
-        stop("Name of start vertex no match") 
+        stop(FALSE) 
       } # if name of start vertex isn't a starting vertex in graph2, stop #
       index.start = which(start == df2$start)
       # which rows in df2 starts with the same vertex as df1 #
       if(!(any(end == df2$end[index.start]))) {
-        stop("Vertex doesn't connect to same point")
+        stop(FALSE)
       } # if name of end vertex isn't a ending vertex of the rows index.start, stop #
       index.end = which(end == df2$end[index.start])
       # which row of index.start ends with the same vertex as df2 #
       # index.end shouldn't be a vector. it should just be a number #
       row.weight = index.start[index.end]
       if(weight != df2$weight[row.weight]){
-        stop("Weight doesn't match")
+        stop(FALSE)
       }
     }
   } 
