@@ -80,8 +80,16 @@ is_undirected <- function(g){
       iweight <- edges[i,]$weight
       if(nrow(edges[edges$start == iend & edges$end == istart,]) == 0)
         return(FALSE)
+        # if there are no rows where the starting vertex #
+        # is the same as the ending vertex for our ith row #
+        # and have the same ending vertex # 
+        # as our ith row's starting vertex #
+        # return FALSE #
       if(edges[edges$start == iend & edges$end == istart,]$weight != iweight)
         return(FALSE)
+      # if that row does exist, if the weight of that row #
+      # isn't the same weight as our ith row #
+      # return FALSE #
     } 
   return(TRUE)
 }
