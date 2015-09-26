@@ -8,9 +8,7 @@ Our is_valid() function will test if the inputted graph object is a list of list
 
 We write this function with if statements. Similar to a to-do list, we test conditions to be a valid graph. We start with the broadest conditions, the graph object has to be a list. We go on to test that each vertex is a list that contains edges and weights. The next step is to test if edges and weights are empty. If they aren't empty, the entry must not be NA. Then we test to make sure that edges are integers and weights are numerics. If our edges are greater than the length of our graph, or less than 1, there should be an error. This way, we can ensure that the number of vertices our vertex is connecting to is not more than the number of vertices in our graph and that it's not connecting to nothing. Our weights should not be less than or equal to 0. The number of vertices a vertex connects to should be the same number of weights that vertex holds, so each edge will have a weight. Lastly, we make sure that our vertex is only connecting to another vertex once. 
 
-```{r}
-Team4Graph
-```
+
 
 
 is_undirected()
