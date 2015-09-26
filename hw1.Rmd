@@ -131,7 +131,7 @@ is_undirected <- function(g){
   }
   
   edges <- edge(g)
-  if (nrow(edges)>0)
+  if (nrow(edges)>0) #again the loop runs when the array starts from 0
    for(i in 1:nrow(edges)){
     istart <- edges[i,]$start
     iend <- edges[i,]$end
