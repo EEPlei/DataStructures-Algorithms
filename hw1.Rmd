@@ -218,3 +218,4 @@ g11 = list(A = list(edges   = c(2L,4L,5L),
 shortest_path(g11, "B", "F")
 ```
 What we should get back is the path "B", "E", "F". 
+
