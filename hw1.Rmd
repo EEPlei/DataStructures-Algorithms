@@ -168,6 +168,8 @@ is_connected(graph1, "A", "B")
 ```
 This should give us TRUE since vertex A connects to vertex B with weight 6. 
 
+ 
+
 ```{r}
 is_connected(graph1, 1, 2)
 ```
@@ -212,4 +214,5 @@ g11 = list(A = list(edges   = c(2L,4L,5L),
 shortest_path(g11, "B", "F")
 ```
 What we should get back is the path "B", "E", "F". 
+
 
