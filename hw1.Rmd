@@ -29,8 +29,8 @@ graph1 <- list(A = list(edges   = c(2L, 5L, 6L),
                F = list(edges   = c(1L, 2L, 3L, 4L, 5L),
                         weights = c(3, 13, 7, 12, 5)))
 ```
-For simpler viewing purposes: 
-edge(graph1) 
+For simpler viewing purposes: \newline
+edge(graph1) \newline
    start end weight 
      A   B      6 
      A   E      1 
