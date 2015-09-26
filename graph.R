@@ -43,9 +43,6 @@ is_valid <- function(g){
     return(FALSE)
   if(length(g) != length(unique(names(g))))
     return(FALSE) 
-  # unique(names(g)) takes out the unique names #
-  # if the length of our graph is equal to that #
-  # all names are unique #
   for(i in 1:length(g)){
     if(typeof(g[[i]]) != "list")
       return(FALSE)
@@ -221,7 +218,8 @@ shortest_path <- function(g,v1,v2){
   
   #The following code will apply Dijkstra's Algorithm
   edges <- edge(g)
-  vinfo <- data.frame(v = character(),dist = numeric(),prev = character(),stringsAsFactors = FALSE)
+  vinfo <- data.frame(v = character(),dist = numeric(),
+                      prev = character(),stringsAsFactors = FALSE)
   unvisited <- names(g)
   for(vert in unvisited){
     newvert <- data.frame(v=as.character(vert),dist=Inf,prev="undefined",stringsAsFactors=FALSE)
