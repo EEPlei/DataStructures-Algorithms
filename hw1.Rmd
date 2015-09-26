@@ -162,6 +162,31 @@ The purpose of this funciton is to see if there is a path from a given vertex to
 
 Before running the function, we first run a series of checks on our input variables. We first check if the graph is valid or not. We then check whether or not our edges are null. Then we check if the edges are of the types "logical"--for example, if the user puts in g1, v1, and "TRUE" into the function then the function throws an error that one of the edges specified is not a valid entry. We also check if the edges our numeric variables. If they are, then our function throws an error so that the user can input a character value into v1 and v2. Lastly, if the edges are not in the graph utilized, then the function also throws an error. We implemented a recursion process in running our is connected function. We first call up the function is connected helper, which indexes the vertices that we've already passed when we "walk" from one edge to the other. We use a "seen" array to keep track of the list of vertices the function has already checked. The reasoning for tracking the list of visited vertices is to prevent an infinite recursion when two vertices point to each other. If we have already seen the vertex, then the function passes that vertex and moves on to the next edge. The final output is_connected(g, v1, v2) tells us whether or not edge v1 is connected to edge v2. If v1 and v2 are connected, return TRUE and if v1 and v2 are not connected returns FALSE.  
 
+Continuing to use our graph1 example. 
+```{r}
+is_connected(graph1, "A", "B")
+```
+This should give us TRUE since vertex A connects to vertex B with weight 6. 
+
+```{r}
+is_connected(graph1, "A", "J")
+is_connected(graph1, "J", "A")
+```
+This should give us FALSE since our function will be making sure that the inputted vertices exist in the inputted graph. So in this case "J" isn't a vertex name in graph1. 
+
+```{r}
+is_connected(graph1, 1, 2)
+```
+This also gives us a FALSE since 1 and 2 are inputted as the vertices, but we want the vertices inputs to be of character value not numeric value. 
+
+```{r}
+g10 = list(A = list(edges   = c(1L), 
+                      weights = c(1)), 
+             B = list(edges   = c(2L), 
+                      weights = c(1))) 
+is_connected(g10, "A", "B")
+```
+For this case, we will get FALSE because vertex A only connects to itself and vertex B only connects to itself. They don't connect to each other. 
 
 Shortest Path
 
