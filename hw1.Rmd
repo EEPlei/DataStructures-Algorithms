@@ -2,6 +2,19 @@
 source("graph.r")
 ```
 
+is_isomorphic()
+
+The purpose of this function is that given two graph objects, the function will give us TRUE if isomorphic, and FALSE if not. If two graphs are isomorphic, the vertices, edges, and weights are identical. Say we have vertex A in the first graph, and it connects to vertex B with weight w. We should also have a vertex A in the second graph that connects to vertex B with weight w. I call them vertex A and vertex B, because isomorphic graphs will be comparing the names of the vertices, not their position within the graph. This should hold true for the entire graph. 
+
+First thing to note. We have created a helper function called edge. Edge takes a graph object and creates a data frame with three columns, start, end, and weight. The start and end columns will contain the name of the vertices. Weight will be a column of numbers. Each row will represent an edge and list the starting vertex, ending vertex and the weight. 
+
+The first thing we do in the function is to test if it both graphs are valid by plugging them into the is_valid function that was already written. There's no point in testing invalid graphs for isomorphism. 
+
+Next, we put each graph through the edge function to obtain dataframes. We then test to see if these two dataframes have the same number of rows or in other words, edges going in one direction. So, although vertex A is going to vertex B with weight w, and vertex B is going to vertex A with weight w, this will show up as A B w and B A w - 2 separate timese in our dataframe. In a special case, it is possible for our dataframe to have 0 rows. This is a result from a graph with a vertex that doesn't link to anything and has no weight. In this case, the only graph it would equal to is a graph with a single vertex of the same name that also doesn't link to anything and has no weight. 
+
+Since our dataframe can't have a negative number of rows, we now consider the remaining case; where our dataframe has 1 or more rows. We use a for loop to run through all the different rows in our first graph's dataframe. We find the entry for the start, end, and weight for the ith row and store them inside variables for ease of use later on. We test to see if the starting vertex in our first graph is a starting vertex anywhere in our second graph. If there is, we store the indexes of those rows in a variable. Now, we check to see if our ending vertex in graph 1 is a ending vertex in any of those rows with the same starting vertex. If there is, there should only be one. We find the weight for that row in our second graph's dataframe with the same starting and ending vertex. Should that weight be equal to the first graph's weight we found earlier, we have an identical edge. Going through all the rows in our first graph's dataframe, if we find an identical edge for all of them in our second graph's dataframe, the two graphs are isomorphic. Remember, we made sure that our two graphs have the same number of edges at the very beginning. As such, there is no way for our second graph to contain all the edges our first graph does and some additional edge (which wouldn't have made the two graphs isomorphic). 
+
+
 
 is_connected() 
 
