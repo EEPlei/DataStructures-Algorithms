@@ -7,10 +7,8 @@ is_valid()
 Our is_valid() function will test if the inputted graph object is a list of lists. We also check to see if the names of our vertices are unique, and that each vertex has a list of only edges and weights with edges being integers and weights being numerics. It will also check to make sure that no vertex connects to a nonexistent vertex and that each edge has a weight that is greater than 0. 
 
 We write this function with if statements. Similar to a to-do list, we test conditions to be a valid graph. We start with the broadest conditions, the graph object has to be a list. We go on to test that each vertex is a list that contains edges and weights. The next step is to test if edges and weights are empty. If they aren't empty, the entry must not be NA. Then we test to make sure that edges are integers and weights are numerics. If our edges are greater than the length of our graph, or less than 1, there should be an error. This way, we can ensure that the number of vertices our vertex is connecting to is not more than the number of vertices in our graph and that it's not connecting to nothing. Our weights should not be less than or equal to 0. The number of vertices a vertex connects to should be the same number of weights that vertex holds, so each edge will have a weight. Lastly, we make sure that our vertex is only connecting to another vertex once. 
-An example of what is_valid() does is the following
-```{r}
-is_valid(g1)
-```
+
+
 
 is_undirected()
 
@@ -22,10 +20,7 @@ Afterwards, we utilize a helper function, edge, that will turn a graph into a da
 
 We only consider the case where a graph has more than 0 edges. Utilizing a for loop to run through all the rows in the graph's dataframe, we then use if statements to knock out graphs with attriubtes of an undirected graph. We first test to see if there's a row such that the ith row that we are testing will have the starting vertex as the ending vertex and vice-versa. If one does exist, we then test the weight of that row with our ith row. If the weight is the same, then we have a complimentary directed edge for our ith row.  
 
-An example: 
-```{r}
-is_undirected(g1)
-```
+
 
 is_isomorphic()
 
@@ -41,18 +36,13 @@ Next, we put each graph through the edge function to obtain dataframes. We then 
 
 Since our dataframe can't have a negative number of rows, we now consider the remaining case; where our dataframe has 1 or more rows. We use a for loop to run through all the different rows in our first graph's dataframe. We find the entry for the start, end, and weight for the ith row and store them inside variables for ease of use later on. We test to see if the starting vertex in our first graph is a starting vertex anywhere in our second graph. If there is, we store the indexes of those rows in a variable. Now, we check to see if our ending vertex in graph 1 is a ending vertex in any of those rows with the same starting vertex. If there is, there should only be one. We find the weight for that row in our second graph's dataframe with the same starting and ending vertex. Should that weight be equal to the first graph's weight we found earlier, we have an identical edge. Going through all the rows in our first graph's dataframe, if we find an identical edge for all of them in our second graph's dataframe, the two graphs are isomorphic. Remember, we made sure that our two graphs have the same number of edges at the very beginning. As such, there is no way for our second graph to contain all the edges our first graph does and some additional edge (which wouldn't have made the two graphs isomorphic). 
 
-Example: 
-```{r}
-is_isomorphic(g1,g2)
-```
+
 
 
 is_connected() 
 
 Before running the function, we first run a series of checks on our input variables. We first check if the graph is valid or not. We then check whether or not our edges are null. Then we check if the edges are of the types "logical"--for example, if the user puts in is_connected(g1, v1, "TRUE") then the function throws an error that one of the edges specified is not a valid entry. We also check if the edges our numeric variables. If they are, then our function throws an error so that the user can input a character value into v1 and v2. Lastly, if the edges are not in the graph utilized, then the function also throws an error. We implemented a recursion process in running our is_connected() function. We first call up the function is_connected_helper(), which indexes the vertices that we've already passed when we "walk" from one edge to the other. We use a "seen" array to keep track of the list of vertices the function has already checked. The reasoning for tracking the list of visited vertices is to prevent an infinite recursion when two vertices point to each other. If we have already seen the vertex, then the function passes that vertex and moves on to the next edge. The final output is_connected(g, v1, v2) tells us whether or not edge v1 is connected to edge v2. If v1 and v2 are connected, return TRUE and if v1 and v2 are not connected returns FALSE.  
-```{r}
-is_connected(g1, A, B)
-```
+
 
 shortest_path()
 
@@ -61,7 +51,5 @@ The purpose of the shortest_path is to find the shortest path between two vertic
 First, we test to see if the inputted graph is valid. Then if the inputted vertices aren't character types, we stop because it is a bad label for them. It's typically not a very good idea to name something using numerics, since we use numbers when we are subsetting to index. We then check to make sure that the two inputted vertices exist in the inputted graph. 
 
 Now, we apply Dijkstra's Algorithm. Our method begins by picking a starting vertex and mark every other vertex as unvisited. We'll assign each vertex inside our graph two attributes to begin with. The first is distance. To begin with, our distance for each vertex is infinity. The other attribute is previous, which well tell us what the previously visited node is. Starting from our starting vertex, we look at all the vertexes that our starting vertex goes to. We find the one with the shortest distance or weight and pick that one. Now that we are at out second vertex, we mark this vertex as visited. We also change the attribute previous to be the first vertex. Should the distance from the first vertex to our current vertex on the route we took be less than the distance previously assigned to our current vertex, we will replace the old distance with the current one. Note, we never visit an already visited vertex. From our current vertex, we repeat the steps in finding the connected vertex with the shortest distance and replace the previous and distance attribute if appropriate. We repeat these steps until we reach the vertex we want to end at. Since we've recorded our steps on the route, it is easy to go back and map out the shortest_path.
-```{r}
-shortest_path(g1,A,B)
-```
+
 
