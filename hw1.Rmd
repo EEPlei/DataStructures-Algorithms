@@ -169,12 +169,6 @@ is_connected(graph1, "A", "B")
 This should give us TRUE since vertex A connects to vertex B with weight 6. 
 
 ```{r}
-is_connected(graph1, "A", "J")
-is_connected(graph1, "J", "A")
-```
-This should give us FALSE since our function will be making sure that the inputted vertices exist in the inputted graph. So in this case "J" isn't a vertex name in graph1. 
-
-```{r}
 is_connected(graph1, 1, 2)
 ```
 This also gives us a FALSE since 1 and 2 are inputted as the vertices, but we want the vertices inputs to be of character value not numeric value. 
