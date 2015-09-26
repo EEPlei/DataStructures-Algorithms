@@ -6,7 +6,7 @@ Team4 - Duke Dinosaurs HW 1 Write Up
 ===================================================================================================
 
 ```{r}
-source("graph.R")
+source("graph.R", echo = TRUE)
 ```
 VALID
 
