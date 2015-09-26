@@ -30,35 +30,35 @@ graph1 <- list(A = list(edges   = c(2L, 5L, 6L),
                         weights = c(3, 13, 7, 12, 5)))
 ```
 For simpler viewing purposes: 
-> edge(graph1)
-   start end weight
-     A   B      6
-     A   E      1
-     A   F      3
-     B   A      6
-     B   C      4
-     B   F     13
-     C   B      4
-     C   F      7
-     D   E     10
-     D   F     12
-     E   A      1
-     E   D     10
-     E   F      5
-     F   A      3
-     F   B     13
-     F   C      7
-     F   D     12
-     F   E      5
-
+> edge(graph1) \newline
+   start end weight \newline
+     A   B      6 \newline
+     A   E      1 \newline
+     A   F      3 \newline
+     B   A      6 \newline
+     B   C      4 \newline
+     B   F     13 \newline
+     C   B      4 \newline
+     C   F      7 \newline
+     D   E     10 \newline
+     D   F     12 \newline
+     E   A      1 \newline
+     E   D     10 \newline
+     E   F      5 \newline
+     F   A      3 \newline
+     F   B     13 \newline
+     F   C      7 \newline
+     F   D     12 \newline
+     F   E      5 \newline
+ 
 ```{r}
 is_valid(graph1)
 ```
 
 is_valid(graph1) should return TRUE since as you can see from the graphic above, graph1 fits all the criterion of a valid graph. 
 
-> is_valid(graph1)
-[1] TRUE
+> is_valid(graph1) \newline
+[1] TRUE \newline
 
 For graphs such as the following, is_valid will return FALSE for various reasons. 
 
@@ -69,13 +69,10 @@ bad_g2 <- list(list(edges   = c(1L, 2L),
                      weights = c(1, 1)))
 ```
 Our is valid function will return this graph input as FALSE because there aren't any unique names for the vertices. In fact, there aren't any names at all. 
-> is_valid(bad_g2)
-[1] FALSE
-Undirected
+> is_valid(bad_g2) \newline
+[1] FALSE \newline
+Undirected \newline
 
-```{r}
-
-```
 
 
 This function will test to see if a graph is undirected. A graph is undirected if all directed edges within the graph have a directed edge coming back with the same weight. For example, should vertex A connect to B with weight w, B should also connect to A with weight w. 
