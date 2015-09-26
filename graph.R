@@ -190,6 +190,88 @@ is_connected_helper <- function(edges, v1, v2, seen) {
 }
 
 
+#shortest path
+shortest_path <- function(g,v1,v2){
+  if(!is_valid(g)){
+    stop("Please input a valid graph.")
+  }
+  
+  
+  if(!(is.character(v1) & is.character(v2))){
+    stop("Bad Label")
+  }
+  
+  if(!(v1 %in% names(g)) | !(v2 %in% names(g))){
+    stop("The vertex/vertices you input is not valid!")
+  }
+  
+  #The following code will apply Dijkstra's Algorithm
+  edges <- edge(g)
+  vinfo <- data.frame(v = character(),dist = numeric(),prev = character(),stringsAsFactors = FALSE)
+  unvisited <- names(g)
+  for(vert in unvisited){
+    newvert <- data.frame(v=as.character(vert),dist=Inf,prev="undefined",stringsAsFactors=FALSE)
+    vinfo <- rbind(vinfo, newvert)
+  }
+  
+  vinfo[vinfo$v == v1,]$dist <- 0
+  
+  while(length(unvisited)!=0){
+    temp <- vinfo[vinfo$v %in% unvisited,]
+    u <- temp[temp$dist == min(temp$dist),][1,]$v   #vertex in unvisited with min dist[u]  
+    if(temp[temp$v == u,]$dist == Inf){
+      if(v2 %in% unvisited)
+        return(c())
+    }
+    unvisited <- unvisited[unvisited != u]          #remove u from unvisited
+    
+    for(vert in edges[edges$start == u,]$end){      #for each neighbor u can go to
+      d <- vinfo[vinfo$v == u,]$dist + edges[edges$start == u & edges$end == vert,]$weight
+      if(d < vinfo[vinfo$v == vert,]$dist){                           # A shorter path to vert has been found
+        vinfo[vinfo$v == vert,]$dist <- d
+        vinfo[vinfo$v == vert,]$prev <- u
+      }
+    }
+  }
+  
+  if(v1 != v2){
+    path <- v2
+    vert <- v2
+    while(vinfo[vinfo$v == vert,]$prev != "undefined"){
+      path <- c(path,vinfo[vinfo$v == vert,]$prev)
+      vert <- vinfo[vinfo$v == vert,]$prev
+    }
+    
+    return(rev(path))
+  }else{
+    toV1 <- edges[edges$end == v1,]
+    minlength <- Inf
+    penultimate <- NULL
+    for(element in toV1[toV1$start != v1,]$start){
+      if(toV1[toV1$start == element,]$weight + vinfo[vinfo$v == element,]$dist < minlength){
+        minlength <- toV1[toV1$start == element,]$weight + vinfo[vinfo$v == element,]$dist
+        penultimate <- element
+      }
+    }
+    if(v1 %in% toV1$start){
+      if(toV1[toV1$start == v1,]$weight <= minlength){
+        return(c(v1,v1))
+      }
+    }else{
+      if(is.null(penultimate)){
+        return(c())
+      }else{
+        
+        path <- penultimate
+        vert <- penultimate
+        while(vinfo[vinfo$v == vert,]$prev != "undefined"){
+          path <- c(path,vinfo[vinfo$v == vert,]$prev)
+          vert <- vinfo[vinfo$v == vert,]$prev
+        }
+        
+        return(c(rev(path),v1))
+      }
+    }
+  }
+}
 
-
-#shortest_path
