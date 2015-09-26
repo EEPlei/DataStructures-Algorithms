@@ -2,12 +2,26 @@ Team4 Duke Dinosaurs HW 1 Write Up
 ```{r}
 source("graph.R")
 ```
+is_valid()
+
+
+is_undirected()
+
+This function will test to see if a graph is undirected. A graph is undirected if all directed edges within the graph have a directed edge coming back with the same weight. For example, should vertex A connect to B with weight w, B should also connect to A with weight w. 
+
+We first test to see if the inputted graph is valid. 
+
+Afterwards, we utilize a helper function, edge, that will turn a graph into a dataframe, such that each row will represent a directed edge with the first column noting the starting vertex, the second column noting the ending vertex, and the third column noting the weight of that edge. 
+
+We only consider the case where a graph has more than 0 edges. Utilizing a for loop to run through all the rows in the graph's dataframe, we then use if statements to knock out graphs with attriubtes of an undirected graph. We first test to see if there's a row such that the ith row that we are testing will have the starting vertex as the ending vertex and vice-versa. If one does exist, we then test the weight of that row with our ith row. If the weight is the same, then we have a complimentary directed edge for our ith row.  
 
 is_isomorphic()
 
 The purpose of this function is that given two graph objects, the function will give us TRUE if isomorphic, and FALSE if not. If two graphs are isomorphic, the vertices, edges, and weights are identical. Say we have vertex A in the first graph, and it connects to vertex B with weight w. We should also have a vertex A in the second graph that connects to vertex B with weight w. I call them vertex A and vertex B, because isomorphic graphs will be comparing the names of the vertices, not their position within the graph. This should hold true for the entire graph. 
 
 First thing to note. We have created a helper function called edge. Edge takes a graph object and creates a data frame with three columns, start, end, and weight. The start and end columns will contain the name of the vertices. Weight will be a column of numbers. Each row will represent an edge and list the starting vertex, ending vertex and the weight. 
+
+Aside from that, we utilized if statements and for loops to achieve our purpose. Subsetting and logical operators were also very helpful in eliminating graphs step by step. We worked from the broadest aspects we didn't want and then slowly became more detailed. 
 
 The first thing we do in the function is to test if it both graphs are valid by plugging them into the is_valid function that was already written. There's no point in testing invalid graphs for isomorphism. 
 
@@ -21,3 +35,4 @@ is_connected()
 
 Before running the function, we first run a series of checks on our input variables. We first check if the graph is valid or not. We then check whether or not our edges are null. Then we check if the edges are of the types "logical"--for example, if the user puts in is_connected(g1, v1, "TRUE") then the function throws an error that one of the edges specified is not a valid entry. We also check if the edges our numeric variables. If they are, then our function throws an error so that the user can input a character value into v1 and v2. Lastly, if the edges are not in the graph utilized, then the function also throws an error. We implemented a recursion process in running our is_connected() function. We first call up the function is_connected_helper(), which indexes the vertices that we've already passed when we "walk" from one edge to the other. We use a "seen" array to keep track of the list of vertices the function has already checked. The reasoning for tracking the list of visited vertices is to prevent an infinite recursion when two vertices point to each other. If we have already seen the vertex, then the function passes that vertex and moves on to the next edge. The final output is_connected(g, v1, v2) tells us whether or not edge v1 is connected to edge v2. If v1 and v2 are connected, return TRUE and if v1 and v2 are not connected returns FALSE.  
 
+shortest_path()
