@@ -256,6 +256,20 @@ shortest_path <- function(g,v1,v2){
     if(v1 %in% toV1$start){
       if(toV1[toV1$start == v1,]$weight <= minlength){
         return(c(v1,v1))
+      }else{
+        if(is.null(penultimate)){
+          return(c())
+        }else{
+          
+          path <- penultimate
+          vert <- penultimate
+          while(vinfo[vinfo$v == vert,]$prev != "undefined"){
+            path <- c(path,vinfo[vinfo$v == vert,]$prev)
+            vert <- vinfo[vinfo$v == vert,]$prev
+          }
+          
+          return(c(rev(path),v1))
+        }
       }
     }else{
       if(is.null(penultimate)){
