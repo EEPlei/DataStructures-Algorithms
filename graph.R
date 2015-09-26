@@ -42,7 +42,10 @@ is_valid <- function(g){
   if(typeof(g)!="list")
     return(FALSE)
   if(length(g) != length(unique(names(g))))
-    return(FALSE)
+    return(FALSE) 
+  # unique(names(g)) takes out the unique names #
+  # if the length of our graph is equal to that #
+  # all names are unique #
   for(i in 1:length(g)){
     if(typeof(g[[i]]) != "list")
       return(FALSE)
