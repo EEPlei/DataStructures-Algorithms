@@ -1,3 +1,70 @@
+#is_valid function
+#check if the graph is a list
+#check if the names for every element are all unique
+#check if every element is a list
+#check if every element only contains edges and weights that are of the appropriate type
+#check there are any edges to non-existent vertices
+#check if all weights are not less than or equal to 0
+#check if every edge has a weight
+is_valid <- function(g){
+  if(typeof(g)!="list")
+    return(FALSE)
+  if(length(g) != length(unique(names(g))))
+    return(FALSE) 
+  for(i in 1:length(g)){
+    if(typeof(g[[i]]) != "list")
+      return(FALSE)
+    if(!("edges" %in% names(g[[i]]) & "weights" %in% names(g[[i]]))) 
+      +     return(FALSE)
+    if(length(g[[i]]$edges) | length(g[[i]]$weights) > 0)
+      if(any(is.na(g[[i]]$edges)) | any(is.na(g[[i]]$weights)))
+        return(FALSE)
+    if(typeof(g[[i]]$edges) != "integer" & typeof(g[[i]]$edges) != "NULL")
+      return(FALSE)
+    if(class(g[[i]]$weights) != "numeric" & class(g[[i]]$weights) != "NULL")
+      return(FALSE)
+    if(any(g[[i]]$edges>length(g)) | any(g[[i]]$edges<1))
+      return(FALSE)
+    if(any(g[[i]]$weights <= 0))
+      return(FALSE)
+    if(length(g[[i]]$edges) != length(g[[i]]$weights))
+      return(FALSE)
+    if(length(g[[i]]$edges) != length(unique(g[[i]]$edges)))
+      return(FALSE)
+  }
+  return(TRUE)
+} 
+
+#is_undirected function
+#to check whether its edge data frame is symmetric
+is_undirected <- function(g){
+  
+  if(!is_valid(g)){ #if graph is not valid, return an error
+    stop("Please input a valid graph")
+  }
+  
+  edges <- edge(g)
+  if (nrow(edges)>0) #again the loop runs when the array starts from 0
+    for(i in 1:nrow(edges)){
+      istart <- edges[i,]$start
+      iend <- edges[i,]$end
+      iweight <- edges[i,]$weight
+      if(nrow(edges[edges$start == iend & edges$end == istart,]) == 0)
+        return(FALSE)
+      # if there are no rows where the starting vertex #
+      # is the same as the ending vertex for our ith row #
+      # and have the same ending vertex # 
+      # as our ith row's starting vertex #
+      # return FALSE #
+      if(edges[edges$start == iend & edges$end == istart,]$weight != iweight)
+        return(FALSE)
+      # if that row does exist, if the weight of that row #
+      # isn't the same weight as our ith row #
+      # return FALSE #
+    } 
+  return(TRUE)
+}
+
 edge <- function(g){
   # function where input is 'g' #
   output <- data.frame(start = numeric(), end = numeric(), weight = numeric(),stringsAsFactors =F)
