@@ -239,7 +239,7 @@ shortest_path <- function(g,v1,v2){
     
     for(vert in edges[edges$start == u,]$end){      #for each neighbor u can go to
       d <- vinfo[vinfo$v == u,]$dist + edges[edges$start == u & edges$end == vert,]$weight
-      if(d < vinfo[vinfo$v == vert,]$dist){                           # A shorter path to vert has been found
+      if(d < vinfo[vinfo$v == vert,]$dist){           # A shorter path to vert has been found
         vinfo[vinfo$v == vert,]$dist <- d
         vinfo[vinfo$v == vert,]$prev <- u
       }
