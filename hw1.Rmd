@@ -16,18 +16,7 @@ We write this function with if statements. Similar to a to-do list, we test cond
 Let's test out an example graph. 
 
 ```{r}
-graph1 <- list(A = list(edges   = c(2L, 5L, 6L),
-                          weights = c(6, 1, 3)),
-                 B = list(edges   = c(1L, 3L, 6L),
-                          weights = c(6, 4, 13)),
-                 C = list(edges   = c(2L, 6L),
-                          weights = c(4, 7 )),
-                 D = list(edges   = c(5L, 6L),
-                          weights = c(10, 12 )),
-                 E = list(edges   = c(1L,4L, 6L),
-                          weights = c(1, 10, 5)),
-                 F = list(edges   = c(1L, 2L, 3L, 4L, 5L),
-                          weights = c(3, 13, 7, 12, 5)))
+graph1
 ```
 
 ```{r}
