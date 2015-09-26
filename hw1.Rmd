@@ -335,8 +335,9 @@ min_span_tree <- function(g){
   }
   return(MST)
 }
-<<<<<<< HEAD
 ```
 =======
 ```
->>>>>>> 4e76c5b26869db639dceea767eedfe1e68ad3e9f
+is_connected() 
+Before running the function, we first run a series of checks on our input variables. We first check if the graph is valid or not. We then check whether or not our edges are null. Then we check if the edges are of the types "logical"--for example, if the user puts in is_connected(g1, v1, "TRUE") then the function throws an error that one of the edges specified is not a valid entry. We also check if the edges our numeric variables. If they are, then our function throws an error so that the user can input a character value into v1 and v2. Lastly, if the edges are not in the graph utilized, then the function also throws an error. We implemented a recursion process in running our is_connected() function. We first call up the function is_connected_helper(), which indexes the vertices that we've already passed when we "walk" from one edge to the other. If we have already seen the vertex, then the function passes that vertex and moves on to the next edge. The final output is_connected(g, v1, v2) tells us whether or not edge v1 is connected to edge v2. If v1 and v2 are connected, return TRUE and if v1 and v2 are not connected returns FALSE.  
+
