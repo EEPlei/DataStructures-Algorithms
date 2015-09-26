@@ -1,8 +1,10 @@
-
 ---
-title: "Team4 Duke Dinosaurs HW 1 Write Up"
 output: pdf_document
 ---
+Team4 - Duke Dinosaurs HW 1 Write Up
+
+===================================================================================================
+
 ```{r}
 source("graph.R")
 ```
@@ -11,14 +13,30 @@ VALID
 Our is_valid function will test if the inputted graph object is a list of lists. We also check to see if the names of our vertices are unique, and that each vertex has a list of only edges and weights with edges being integers and weights being numerics. It will also check to make sure that no vertex connects to a nonexistent vertex and that each edge has a weight that is greater than 0. 
 
 We write this function with if statements. Similar to a to-do list, we test conditions to be a valid graph. We start with the broadest conditions, the graph object has to be a list. We go on to test that each vertex is a list that contains edges and weights. The next step is to test if edges and weights are empty. If they aren't empty, the entry must not be NA. Then we test to make sure that edges are integers and weights are numerics. If our edges are greater than the length of our graph, or less than 1, there should be an error. This way, we can ensure that the number of vertices our vertex is connecting to is not more than the number of vertices in our graph and that it's not connecting to nothing. Our weights should not be less than or equal to 0. The number of vertices a vertex connects to should be the same number of weights that vertex holds, so each edge will have a weight. Lastly, we make sure that our vertex is only connecting to another vertex once. 
+Let's test out an example graph. 
 
 ```{r}
-is_valid(Team4Graph)
+graph1 <- list(A = list(edges   = c(2L, 5L, 6L),
+                          weights = c(6, 1, 3)),
+                 B = list(edges   = c(1L, 3L, 6L),
+                          weights = c(6, 4, 13)),
+                 C = list(edges   = c(2L, 6L),
+                          weights = c(4, 7 )),
+                 D = list(edges   = c(5L, 6L),
+                          weights = c(10, 12 )),
+                 E = list(edges   = c(1L,4L, 6L),
+                          weights = c(1, 10, 5)),
+                 F = list(edges   = c(1L, 2L, 3L, 4L, 5L),
+                          weights = c(3, 13, 7, 12, 5)))
 ```
 
+```{r}
+is_valid(graph1)
+```
 
+is_valid(graph1) should return TRUE since as you can see from the graphic above, graph1 fits all the criterion of a valid graph. 
 
-is_undirected()
+Undirected
 
 This function will test to see if a graph is undirected. A graph is undirected if all directed edges within the graph have a directed edge coming back with the same weight. For example, should vertex A connect to B with weight w, B should also connect to A with weight w. 
 
@@ -30,7 +48,7 @@ We only consider the case where a graph has more than 0 edges. Utilizing a for l
 
 
 
-is_isomorphic()
+Isomorphic
 
 The purpose of this function is that given two graph objects, the function will give us TRUE if isomorphic, and FALSE if not. If two graphs are isomorphic, the vertices, edges, and weights are identical. Say we have vertex A in the first graph, and it connects to vertex B with weight w. We should also have a vertex A in the second graph that connects to vertex B with weight w. I call them vertex A and vertex B, because isomorphic graphs will be comparing the names of the vertices, not their position within the graph. This should hold true for the entire graph. 
 
@@ -47,7 +65,7 @@ Since our dataframe can't have a negative number of rows, we now consider the re
 
 
 
-Is Connected
+Connected
 
 The purpose of this funciton is to see if there is a path from a given vertex to another given vertex within a given graph. 
 
