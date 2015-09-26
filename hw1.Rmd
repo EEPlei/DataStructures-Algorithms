@@ -43,7 +43,7 @@ Since our dataframe can't have a negative number of rows, we now consider the re
 
 Example: 
 ```{r}
-
+is_isomorphic(g1,g2)
 ```
 
 
@@ -51,7 +51,7 @@ is_connected()
 
 Before running the function, we first run a series of checks on our input variables. We first check if the graph is valid or not. We then check whether or not our edges are null. Then we check if the edges are of the types "logical"--for example, if the user puts in is_connected(g1, v1, "TRUE") then the function throws an error that one of the edges specified is not a valid entry. We also check if the edges our numeric variables. If they are, then our function throws an error so that the user can input a character value into v1 and v2. Lastly, if the edges are not in the graph utilized, then the function also throws an error. We implemented a recursion process in running our is_connected() function. We first call up the function is_connected_helper(), which indexes the vertices that we've already passed when we "walk" from one edge to the other. We use a "seen" array to keep track of the list of vertices the function has already checked. The reasoning for tracking the list of visited vertices is to prevent an infinite recursion when two vertices point to each other. If we have already seen the vertex, then the function passes that vertex and moves on to the next edge. The final output is_connected(g, v1, v2) tells us whether or not edge v1 is connected to edge v2. If v1 and v2 are connected, return TRUE and if v1 and v2 are not connected returns FALSE.  
 ```{r}
-
+is_connected(g, v1, v2)
 ```
 
 shortest_path()
@@ -62,6 +62,6 @@ First, we test to see if the inputted graph is valid. Then if the inputted verti
 
 Now, we apply Dijkstra's Algorithm. Our method begins by picking a starting vertex and mark every other vertex as unvisited. We'll assign each vertex inside our graph two attributes to begin with. The first is distance. To begin with, our distance for each vertex is infinity. The other attribute is previous, which well tell us what the previously visited node is. Starting from our starting vertex, we look at all the vertexes that our starting vertex goes to. We find the one with the shortest distance or weight and pick that one. Now that we are at out second vertex, we mark this vertex as visited. We also change the attribute previous to be the first vertex. Should the distance from the first vertex to our current vertex on the route we took be less than the distance previously assigned to our current vertex, we will replace the old distance with the current one. Note, we never visit an already visited vertex. From our current vertex, we repeat the steps in finding the connected vertex with the shortest distance and replace the previous and distance attribute if appropriate. We repeat these steps until we reach the vertex we want to end at. Since we've recorded our steps on the route, it is easy to go back and map out the shortest_path.
 ```{r}
-
+shortest_path(g,v1,v2)
 ```
 
