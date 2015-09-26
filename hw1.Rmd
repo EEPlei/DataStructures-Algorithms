@@ -125,8 +125,14 @@ edge <- function(g){
 #is_undirected
 #to check whether its edge data frame is symmetric
 is_undirected <- function(g){
+  
+  if(!is_valid(g)){ #if graph is not valid, return an error
+    stop("Please input a valid graph")
+  }
+  
   edges <- edge(g)
-  for(i in 1:nrow(edges)){
+  if (nrow(edges)>0)
+   for(i in 1:nrow(edges)){
     istart <- edges[i,]$start
     iend <- edges[i,]$end
     iweight <- edges[i,]$weight
