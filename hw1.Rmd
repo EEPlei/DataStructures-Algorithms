@@ -198,3 +198,23 @@ Now, we apply Dijkstra's Algorithm. Our method begins by picking a starting vert
 
 For the corner case where the first vertex goes to itself, Dijkstra's Algorithm won't directly solve the problem. What we do in this case, is look at all the paths from vertices that can go to the first vertex in one step. We use Dijkstra's Algorithm to calculate the shortest route from that. Then, we add the shortest distance to the distance between the penultimate vertex and the last vertex. Also, if possible, we compare the shortest path we found to the distance between the first vertex and itself. 
 
+We implemented the shortest_path function using forloops, while loops and ifelse statements. 
+
+Our graph1 wouldn't illustrate our shortest_path function well. 
+We'll us a different one. 
+```{r}
+g11 = list(A = list(edges   = c(2L,4L,5L),
+                    weights = c(1 ,4 ,3 )),
+           B = list(edges   = c(1L,4L,5L),
+                    weights = c(1 ,4 ,2 )),
+           C = list(edges   = c(5L,6L),
+                    weights = c(4 ,5 )),
+           D = list(edges   = c(1L,2L,5L),
+                    weights = c(4 ,4 ,4 )),
+           E = list(edges   = c(1L,2L,3L,4L,6L),
+                    weights = c(3 ,2 ,4 ,4 ,7 )),
+           F = list(edges   = c(3L,5L),
+                    weights = c(5 ,7 )))
+shortest_path(g11, "B", "F")
+```
+What we should get back is the path "B", "E", "F". 

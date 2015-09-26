@@ -232,9 +232,13 @@ shortest_path <- function(g,v1,v2){
   edges <- edge(g)
   vinfo <- data.frame(v = character(),dist = numeric(),
                       prev = character(),stringsAsFactors = FALSE)
+  #empty dataframe#
   unvisited <- names(g)
+  #listing unvisited vertices and storing it#
   for(vert in unvisited){
     newvert <- data.frame(v=as.character(vert),dist=Inf,prev="undefined",stringsAsFactors=FALSE)
+    # creates a new dataframe #
+    # lists vertices and the two attributes, distance and previous#
     vinfo <- rbind(vinfo, newvert)
   }
   
