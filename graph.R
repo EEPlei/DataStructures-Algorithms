@@ -59,7 +59,7 @@ is_valid <- function(g){
     if(typeof(g[[i]]) != "list")
       return(FALSE)
     if(!("edges" %in% names(g[[i]]) & "weights" %in% names(g[[i]]))) 
-      +     return(FALSE)
+      return(FALSE)
     if(length(g[[i]]$edges) | length(g[[i]]$weights) > 0)
       if(any(is.na(g[[i]]$edges)) | any(is.na(g[[i]]$weights)))
         return(FALSE)
