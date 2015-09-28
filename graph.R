@@ -174,7 +174,10 @@ is_connected <- function(g, v1, v2) {
   if(is.numeric(v1) | is.numeric(v2)){
     stop("Either v1 or v2 is a numeric value please input a character value")
   }
-  
+  if(length(v1) != 1) 
+    {return(FALSE)} 
+  if(length(v2) != 1) 
+    {return(FALSE)}
   if(!(v1 %in% names(g))){
     stop("v1 is not in graph")
   }
