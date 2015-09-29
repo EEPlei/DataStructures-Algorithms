@@ -165,7 +165,13 @@ is_connected <- function(g, v1, v2) {
   if(!is_valid(g)){ #if graph is not valid, return an error
     stop("Please input a valid graph")
   }
-  if(is.na(v1) | is.na(v2)){ #if v1 or v2 are null, then return false 
+  
+  if(length(v1)!=1 | length(v2)!=1){
+    stop("Please input a non-vectorized input value in v1 or v2")
+  }
+  
+  
+  if(any(is.na(v1)) | any(is.na(v2))){ #if v1 or v2 are null, then return false 
     stop("Either v1 or v2 is empty please input a character value")
   }
   if(is.logical(v1) | is.logical(v2)){
@@ -174,17 +180,11 @@ is_connected <- function(g, v1, v2) {
   if(is.numeric(v1) | is.numeric(v2)){
     stop("Either v1 or v2 is a numeric value please input a character value")
   }
-  if(length(v1) != 1) 
-    {return(FALSE)} 
-  if(length(v2) != 1) 
-    {return(FALSE)}
-  if(!(v1 %in% names(g))){
-    stop("v1 is not in graph")
+  
+  if(!(any(v1 %in% names(g))) | (!(any(v2 %in% names(g))))){ 
+    stop("Either v1 or v2  is not in graph")
   }
   
-  if(!(v2 %in% names(g))){
-    stop("v2 is not in graph")
-  }
   
   edges <- edge(g)
   return(is_connected_helper(edges, v1, v2, c())) 
@@ -194,7 +194,7 @@ is_connected <- function(g, v1, v2) {
 is_connected_helper <- function(edges, v1, v2, seen) {
   #"seen" array denotes the vertices that I've already passed 
   if (length(seen) > 0) { #loop continues even when seen =0..weird
-    for (i in 1:length(seen)) {
+      for (i in 1:length(seen)) {
       if (v1 == seen[i]) {
         return(FALSE) # return FALSE if we've already passed the "seen" vector with our v1
       }
@@ -214,7 +214,6 @@ is_connected_helper <- function(edges, v1, v2, seen) {
     }
   return(FALSE)
 }
-
 
 #shortest path
 shortest_path <- function(g,v1,v2){
