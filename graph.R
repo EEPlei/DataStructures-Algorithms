@@ -160,6 +160,8 @@ is_isomorphic <- function(g1, g2){
 
 
 
+
+
 #is_connected function
 is_connected <- function(g, v1, v2) {
   if(!is_valid(g)){ #if graph is not valid, return an error
@@ -194,12 +196,11 @@ is_connected <- function(g, v1, v2) {
 is_connected_helper <- function(edges, v1, v2, seen) {
   #"seen" array denotes the vertices that I've already passed 
   if (length(seen) > 0) { #loop continues even when seen =0..weird
-      for (i in 1:length(seen)) {
-      if (v1 == seen[i]) {
-        return(FALSE) # return FALSE if we've already passed the "seen" vector with our v1
+    if (v1 %in% seen){
+      return(FALSE) # return FALSE if we've already passed the "seen" vector with our v1
       }
     }
-  }
+  
   seen <- c(v1, seen) # insert v1 in the "seen" array
   if (nrow(edges)>0) #again, the array starts at 0 so need to specify to start at 1
     for (i in 1:nrow(edges)) {
@@ -214,6 +215,7 @@ is_connected_helper <- function(edges, v1, v2, seen) {
     }
   return(FALSE)
 }
+
 
 #shortest path
 shortest_path <- function(g,v1,v2){
