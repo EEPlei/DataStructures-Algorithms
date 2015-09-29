@@ -236,8 +236,11 @@ shortest_path <- function(g,v1,v2){
   
   #The following code will apply Dijkstra's Algorithm
   edges <- edge(g)
+  #dist means distance from source to source
+  #prev means previous node in optimal path initializaiton
   vinfo <- data.frame(v = character(),dist = numeric(),
                       prev = character(),stringsAsFactors = FALSE)
+  #Initially all nodes are unvisited
   unvisited <- names(g)
   for(vert in unvisited){
     newvert <- data.frame(v=as.character(vert),dist=Inf,prev="undefined",stringsAsFactors=FALSE)
