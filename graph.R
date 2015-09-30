@@ -107,15 +107,15 @@ is_undirected <- function(g){
 is_isomorphic <- function(g1, g2){
   
   if(!is_valid(g1)){
-    stop("error")
+    stop("error - g1 is not valid")
   } #tests is_valid#
   if(!is_valid(g2)){
-    stop("error")
+    stop("error - g2 is not valid")
   } #tests is_valid#
   df1 = edge(g1) # makes graph1 into dataframe #
   df2 = edge(g2) # makes graph2 into dataframe #
   if(nrow(df1) != nrow(df2)){
-    return(FALSE)
+    return("Different number of edges")
   } # compares number of rows #
   if(nrow(df1) == 0){ # graph with empty list for vector #
     if(names(g1) != names(g2)){
