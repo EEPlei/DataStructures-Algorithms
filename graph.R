@@ -1,15 +1,3 @@
-graph1 <- list(A = list(edges   = c(2L, 5L, 6L),
-                        weights = c(6, 1, 3)),
-               B = list(edges   = c(1L, 3L, 6L),
-                        weights = c(6, 4, 13)),
-               C = list(edges   = c(2L, 6L),
-                        weights = c(4, 7 )),
-               D = list(edges   = c(5L, 6L),
-                        weights = c(10, 12 )),
-               E = list(edges   = c(1L,4L, 6L),
-                        weights = c(1, 10, 5)),
-               F = list(edges   = c(1L, 2L, 3L, 4L, 5L),
-                        weights = c(3, 13, 7, 12, 5)))
 #edge function - helper#
 edge <- function(g){
   # function where input is 'g' #
