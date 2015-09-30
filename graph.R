@@ -1,13 +1,13 @@
 #edge function - helper#
 edge <- function(g){
-  # function where input is 'g' #
+# function where input is 'g' #
   output <- data.frame(start = numeric(), end = numeric(), weight = numeric(),stringsAsFactors =F)
-  # makes an empty dataframe. where the horizontal header has "start", "end", and "weight" # 
+  # makes an empty dataframe. where the horizontal header has "start", "end", and "weight" #
   # numeric() creates a zero vector for each column #
   for(i in 1:length(g)){
     cur <- g[i]
     curvec <- unlist(cur)
-    num_to <- length(curvec)/2 
+    num_to <- length(curvec)/2
     #number of vertices the current vertex goes to #
     if(num_to==0)
       next
@@ -17,7 +17,7 @@ edge <- function(g){
     }
     # makes a vector where you take the start node, end node, and the weight #
     # rwo bind the empty dataframe and set the names as the just made vectors #
-    # and the names already assigned to the empty dataframe # 
+    # and the names already assigned to the empty dataframe #
     #convert numbers to letters #
     for(m in 1:length(output$start)){
       for(n in 1:length(g)){
@@ -25,30 +25,26 @@ edge <- function(g){
           output$start[m] = replace(output$start[m],,names(g[n]))
         if(output$end[m] == n)
           output$end[m] = replace(output$end[m],,names(g[n]))
-      } 
+      }
     }
   }
   return(output)
 }
 #is_valid function
-#check if the graph is a list
-#check if the names for every element are all unique
-#check if every element is a list
-#check if every element only contains edges and weights that are of the appropriate type
-#check there are any edges to non-existent vertices
-#check if all weights are not less than or equal to 0
-#check if every edge has a weight
 is_valid <- function(g){
   if(typeof(g)!="list")
     return(FALSE)
+  #check if the graph is a list
   if(length(g) == 0)
     return(FALSE)
   if(length(g) != length(unique(names(g))))
-    return(FALSE) 
+    return(FALSE)
+  #check if the names for every element are all unique
   for(i in 1:length(g)){
     if(typeof(g[[i]]) != "list")
       return(FALSE)
-    if(!("edges" %in% names(g[[i]]) & "weights" %in% names(g[[i]]))) 
+    #check if every element is a list
+    if(!("edges" %in% names(g[[i]]) & "weights" %in% names(g[[i]])))
       return(FALSE)
     if(length(g[[i]]$edges) | length(g[[i]]$weights) > 0)
       if(any(is.na(g[[i]]$edges)) | any(is.na(g[[i]]$weights)))
@@ -57,14 +53,18 @@ is_valid <- function(g){
       return(FALSE)
     if(class(g[[i]]$weights) != "numeric" & class(g[[i]]$weights) != "NULL")
       return(FALSE)
+    #check if every element only contains edges and weights that are of the appropriate type
     if(any(g[[i]]$edges>length(g)) | any(g[[i]]$edges<1))
       return(FALSE)
+    #check there are any edges to non-existent vertices
     if(any(g[[i]]$weights <= 0))
       return(FALSE)
+    #check if all weights are not less than or equal to 0
     if(length(g[[i]]$edges) != length(g[[i]]$weights))
       return(FALSE)
     if(length(g[[i]]$edges) != length(unique(g[[i]]$edges)))
       return(FALSE)
+    #check if every edge has a weight
   }
   return(TRUE)
 } 
