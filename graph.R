@@ -1,6 +1,6 @@
 #edge function - helper#
 edge <- function(g){
-# function where input is 'g' #
+  # function where input is 'g' #
   output <- data.frame(start = numeric(), end = numeric(), weight = numeric(),stringsAsFactors =F)
   # makes an empty dataframe. where the horizontal header has "start", "end", and "weight" #
   # numeric() creates a zero vector for each column #
@@ -107,15 +107,15 @@ is_undirected <- function(g){
 is_isomorphic <- function(g1, g2){
   
   if(!is_valid(g1)){
-    stop("error - g1 is not valid")
+    stop("error")
   } #tests is_valid#
   if(!is_valid(g2)){
-    stop("error - g2 is not valid")
+    stop("error")
   } #tests is_valid#
   df1 = edge(g1) # makes graph1 into dataframe #
   df2 = edge(g2) # makes graph2 into dataframe #
   if(nrow(df1) != nrow(df2)){
-    stop("Different number of edges")
+    return(FALSE)
   } # compares number of rows #
   if(nrow(df1) == 0){ # graph with empty list for vector #
     if(names(g1) != names(g2)){
@@ -188,8 +188,8 @@ is_connected_helper <- function(edges, v1, v2, seen) {
   if (length(seen) > 0) { #loop continues even when seen =0..weird
     if (v1 %in% seen){
       return(FALSE) # return FALSE if we've already passed the "seen" vector with our v1
-      }
     }
+  }
   
   seen <- c(v1, seen) # insert v1 in the "seen" array
   if (nrow(edges)>0) #again, the array starts at 0 so need to specify to start at 1
@@ -309,5 +309,6 @@ shortest_path <- function(g,v1,v2){
     }
   }
 }
+
 
 
