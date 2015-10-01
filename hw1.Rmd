@@ -31,7 +31,7 @@ graph1 <- list(A = list(edges   = c(2L, 5L, 6L),
 is_valid(graph1)
 ```
 
-`is_valid(graph1)` should return TRUE since as you can see from the graphic above, graph1 fits all the criterion of a valid graph. Since I know graph1 to be valid, it might be useful to run `edge(graph1)` just to have a better picture of what the graph looks like. 
+`is_valid(graph1)` should return TRUE since as you can see from the graphic above, graph1 fits all the criterion of a valid graph. Since I know graph1 to be valid, it might be useful to run `edge_summarygraph1)` just to have a better picture of what the graph looks like. 
 
 For graphs such as the following, `is_valid` will return FALSE for various reasons. 
 
@@ -61,7 +61,7 @@ We first test to see if the inputted graph is valid.
 
 Afterwards, we utilize a helper function, `edge`, that will turn a graph into a dataframe, such that each row will represent a directed edge with the first column noting the starting vertex, the second column noting the ending vertex, and the third column noting the weight of that edge. 
 ```{r}
-edge(graph1)
+edge_summarygraph1)
 is_undirected(graph1)
 ```
 Since we know that graph1 is valid, we can go ahead and show an example of what the edge function will do. Inputting graph1 into our `is_undirected` function will also result in TRUE. Looking at the dataframe we created using our `edge` function, you should be able to see that each row should have a complimentary row. We test for undirected-ness in our function using the following method. 
@@ -124,8 +124,8 @@ is_isomorphic(g6,g5)
 ```
 These two should return TRUE as well. Let's use the edge function to make it easier to see why. 
 ```{r}
-edge(g5)
-edge(g6)
+edge_summaryg5)
+edge_summaryg6)
 ```
 As you can see, g5 has three rows. The first one tells us that A vertex will go to itself with weight 1. In g6, you can see that the third row tells us that this graph has the exact same edge. The same holds for the second and third row when compared to the second and first row respectively. 
 
