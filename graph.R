@@ -207,7 +207,6 @@ is_connected_helper <- function(edges, v1, v2, seen) {
 }
 
 
-#shortest path
 shortest_path <- function(g,v1,v2){
   if(!is_valid(g)){
     stop("Please input a valid graph.")
@@ -218,70 +217,94 @@ shortest_path <- function(g,v1,v2){
     stop("Bad Label")
   }
   
+  
   if(!(v1 %in% names(g)) | !(v2 %in% names(g))){
     stop("The vertex/vertices you input is not valid!")
-  }
+  }#test whether both vertices are valid inputs
   
-  #The following code will apply Dijkstra's Algorithm
+  #the following code will apply Dijkstra's Algorithm
   edges <- edge(g)
   #dist means distance from source to source
-  #prev means previous node in optimal path initializaiton
+  #prev means previous node in optimal path
+  #initializaiton: vinfo is a table summarizing all vertices with dist and pre
   vinfo <- data.frame(v = character(),dist = numeric(),
                       prev = character(),stringsAsFactors = FALSE)
-  #Initially all nodes are unvisited
+  #initially all nodes are unvisited
   unvisited <- names(g)
+  #looping through the unvisited set to update all vertices so that their dist is infinity and previous node is undfined
   for(vert in unvisited){
     newvert <- data.frame(v=as.character(vert),dist=Inf,prev="undefined",stringsAsFactors=FALSE)
     vinfo <- rbind(vinfo, newvert)
   }
   
+  #set the dist for v1 as zero first
   vinfo[vinfo$v == v1,]$dist <- 0
   
+  #as long as there is still at least a not unvisited, loop through the nodes
   while(length(unvisited)!=0){
+    #temp is an intermediate subtable of vinfo comprised of unvisited nodes
     temp <- vinfo[vinfo$v %in% unvisited,]
     u <- temp[temp$dist == min(temp$dist),][1,]$v   #vertex in unvisited with min dist[u]  
-    if(temp[temp$v == u,]$dist == Inf){
+    if(temp[temp$v == u,]$dist == Inf){  #if u's dist is Inf, then it must be unconnectable because it already has the smallest dist among the unvisited set
       if(v2 %in% unvisited)
+        #since a vertex with smallest dist has Inf dist, if now v2 is still unvisited, then it must be unreachable, return NULL
+        #Actually here I could have use is_connected function but I forgot...
         return(c())
     }
     unvisited <- unvisited[unvisited != u]          #remove u from unvisited
     
     for(vert in edges[edges$start == u,]$end){      #for each neighbor u can go to
       d <- vinfo[vinfo$v == u,]$dist + edges[edges$start == u & edges$end == vert,]$weight
-      if(d < vinfo[vinfo$v == vert,]$dist){           # A shorter path to vert has been found
-        vinfo[vinfo$v == vert,]$dist <- d
-        vinfo[vinfo$v == vert,]$prev <- u
+      # let d be the sum of dist between u to vert and u's dist
+      if(d < vinfo[vinfo$v == vert,]$dist){           # If d is less than vert's dist, then a shorter path to vert has been found
+        vinfo[vinfo$v == vert,]$dist <- d  #update vert's dist as d
+        vinfo[vinfo$v == vert,]$prev <- u  #update vert's prev as u
       }
     }
   }
   
-  if(v1 != v2){
-    path <- v2
-    vert <- v2
-    while(vinfo[vinfo$v == vert,]$prev != "undefined"){
-      path <- c(path,vinfo[vinfo$v == vert,]$prev)
-      vert <- vinfo[vinfo$v == vert,]$prev
+  if(v1 != v2){  
+    path <- v2  # let path be a vector to store the output in reverse order, and initially put v2 in it
+    vert <- v2  # let vert be the last node on the optimal path which has been put into path
+    while(vinfo[vinfo$v == vert,]$prev != "undefined"){ #if vert's pre is undefined, then stop because it has reached v1
+      path <- c(path,vinfo[vinfo$v == vert,]$prev)   #put pre into path recursively
+      vert <- vinfo[vinfo$v == vert,]$prev           #and update vert recursively
     }
     
-    return(rev(path))
+    return(rev(path))  # finally return the reverse of path
   }else{
+    #this part is a bit painful because at first I didn't think v1 can be equal to v2
+    #therefore in my previous code design I use undefined prev for v1
+    #when I found this error, I was approaching the deadline so I chose not to touch previous code and add the 
+    #additional consideration for the case v1 = v2 here.
+    #so to answer Prof. Rundel's question, is the painful code below really necessary?
+    #should have been no, but yes when we approached deadline. sorry about that, if you're patient, please finish reading it smile emoticon
     toV1 <- edges[edges$end == v1,]
+    #let toV1 store the edges whose end is v1 (then is v2 too)
     minlength <- Inf
+    #minlengh is the shortest path's distance 
     penultimate <- NULL
-    for(element in toV1[toV1$start != v1,]$start){
+    #penultimate is the second last vertex in the shortest path, i.e. the vertex pointing back to v1
+    for(element in toV1[toV1$start != v1,]$start){  #loop through the vertices who points to v1 excluding v1 itself, call it element
       if(toV1[toV1$start == element,]$weight + vinfo[vinfo$v == element,]$dist < minlength){
+        #if the dist between element and v1 plus the dist of element is less than minlength, then update it as the new minlength
         minlength <- toV1[toV1$start == element,]$weight + vinfo[vinfo$v == element,]$dist
         penultimate <- element
+        # update the penultimate vertex
       }
     }
     if(v1 %in% toV1$start){
+      #after update minlength and penultimate, if v1 can also walk to itself directly
       if(toV1[toV1$start == v1,]$weight <= minlength){
+        #then if it's distance to itself is less than minlenght
         return(c(v1,v1))
+        #output v1 to v1 directly
       }else{
+        #otherwise, if penultimate is null, then v1 cannot go back to itself
         if(is.null(penultimate)){
           return(c())
         }else{
-          
+          #otherwise, penultimate exsits, update path and vert in the same way as was done when v1 !=v1
           path <- penultimate
           vert <- penultimate
           while(vinfo[vinfo$v == vert,]$prev != "undefined"){
@@ -293,9 +316,11 @@ shortest_path <- function(g,v1,v2){
         }
       }
     }else{
+      #otherwise v1 cannot walk to itself directly
       if(is.null(penultimate)){
+        #if penultimate is also null at the same time, then return null
         return(c())
-      }else{
+      }else{ # otherwise, same output return as before
         
         path <- penultimate
         vert <- penultimate
