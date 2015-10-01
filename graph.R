@@ -95,12 +95,9 @@ is_undirected <- function(g){
       # if that row does exist, if the weight of that row #
       # isn't the same weight as our ith row #
       # return FALSE #
-    } 
+    }
   return(TRUE)
 }
-
-
-
 
 #is_isomorphic
 
@@ -129,7 +126,7 @@ is_isomorphic <- function(g1, g2){
       end <- df1$end[i] # end vertex in graph1 #
       weight <- df1$weight[i] # weight of edge in graph1 #
       if(!(any(start %in% df2$start))){
-        return(FALSE) 
+        return(FALSE)
       } # if name of start vertex isn't a starting vertex in graph2, stop #
       index.start = which(start == df2$start)
       # which rows in df2 starts with the same vertex as df1 #
@@ -144,13 +141,9 @@ is_isomorphic <- function(g1, g2){
         return(FALSE)
       }
     }
-  } 
+  }
   return(TRUE)
-}  
-
-
-
-
+}
 
 #is_connected function
 is_connected <- function(g, v1, v2) {
@@ -162,8 +155,7 @@ is_connected <- function(g, v1, v2) {
     stop("Please input a non-vectorized input value in v1 or v2")
   }
   
-  
-  if(any(is.na(v1)) | any(is.na(v2))){ #if v1 or v2 are null, then return false 
+  if(any(is.na(v1)) | any(is.na(v2))){ #if v1 or v2 are null, then return false
     stop("Either v1 or v2 is empty please input a character value")
   }
   if(is.logical(v1) | is.logical(v2)){
@@ -173,40 +165,36 @@ is_connected <- function(g, v1, v2) {
     stop("Either v1 or v2 is a numeric value please input a character value")
   }
   
-  if(!(any(v1 %in% names(g))) | (!(any(v2 %in% names(g))))){ 
+  if(!(any(v1 %in% names(g))) | (!(any(v2 %in% names(g))))){
     stop("Either v1 or v2  is not in graph")
   }
-  
-  
   edges <- edge_summary(g)
-  return(is_connected_helper(edges, v1, v2, c())) 
+  return(is_connected_helper(edges, v1, v2, c()))
   # call up is_connected_helper, to use the "seen" array : this is to prevent infinite loops
 }
 
 is_connected_helper <- function(edges, v1, v2, seen) {
-  #"seen" array denotes the vertices that I've already passed 
+  #"seen" array denotes the vertices that I've already passed
   if (length(seen) > 0) { #loop continues even when seen =0..weird
     if (v1 %in% seen){
       return(FALSE) # return FALSE if we've already passed the "seen" vector with our v1
     }
   }
-  
   seen <- c(v1, seen) # insert v1 in the "seen" array
   if (nrow(edges)>0) #again, the array starts at 0 so need to specify to start at 1
     for (i in 1:nrow(edges)) {
       istart <- edges[i,1] # start column vector
       iend <- edges[i,2] #end column vector
-      if (istart == v1 & (iend == v2 | is_connected_helper(edges, iend, v2, seen))) { 
-        #1) if edge start is v1 and edge end is v2 
+      if (istart == v1 & (iend == v2 | is_connected_helper(edges, iend, v2, seen))) {
+        #1) if edge start is v1 and edge end is v2
         #  or
-        #2) if edge start is v1 and edge end is some other vertex other than v2 
+        #2) if edge start is v1 and edge end is some other vertex other than v2
         return(TRUE)
       }
     }
   return(FALSE)
 }
-
-
+#shortest_path#
 shortest_path <- function(g,v1,v2){
   if(!is_valid(g)){
     stop("Please input a valid graph.")
@@ -231,9 +219,12 @@ shortest_path <- function(g,v1,v2){
                       prev = character(),stringsAsFactors = FALSE)
   #initially all nodes are unvisited
   unvisited <- names(g)
-  #looping through the unvisited set to update all vertices so that their dist is infinity and previous node is undfined
+  #looping through the unvisited set to update all vertices so that their #
+  # dist is infinity and previous node is undefined#
   for(vert in unvisited){
-    newvert <- data.frame(v=as.character(vert),dist=Inf,prev="undefined",stringsAsFactors=FALSE)
+    newvert <- data.frame(v=as.character(vert),dist=Inf,
+                          prev="undefined",
+                          stringsAsFactors=FALSE)
     vinfo <- rbind(vinfo, newvert)
   }
   
@@ -245,9 +236,12 @@ shortest_path <- function(g,v1,v2){
     #temp is an intermediate subtable of vinfo comprised of unvisited nodes
     temp <- vinfo[vinfo$v %in% unvisited,]
     u <- temp[temp$dist == min(temp$dist),][1,]$v   #vertex in unvisited with min dist[u]  
-    if(temp[temp$v == u,]$dist == Inf){  #if u's dist is Inf, then it must be unconnectable because it already has the smallest dist among the unvisited set
+    if(temp[temp$v == u,]$dist == Inf){  
+      #if u's dist is Inf, then it must be unconnectable because #
+      # it already has the smallest dist among the unvisited set #
       if(v2 %in% unvisited)
-        #since a vertex with smallest dist has Inf dist, if now v2 is still unvisited, then it must be unreachable, return NULL
+        #since a vertex with smallest dist has Inf dist, if now v2 #
+        #is still unvisited, then it must be unreachable, return NULL#
         #Actually here I could have use is_connected function but I forgot...
         return(c())
     }
@@ -256,7 +250,8 @@ shortest_path <- function(g,v1,v2){
     for(vert in edges[edges$start == u,]$end){      #for each neighbor u can go to
       d <- vinfo[vinfo$v == u,]$dist + edges[edges$start == u & edges$end == vert,]$weight
       # let d be the sum of dist between u to vert and u's dist
-      if(d < vinfo[vinfo$v == vert,]$dist){           # If d is less than vert's dist, then a shorter path to vert has been found
+      if(d < vinfo[vinfo$v == vert,]$dist){           
+        # If d is less than vert's dist, then a shorter path to vert has been found
         vinfo[vinfo$v == vert,]$dist <- d  #update vert's dist as d
         vinfo[vinfo$v == vert,]$prev <- u  #update vert's prev as u
       }
@@ -266,7 +261,8 @@ shortest_path <- function(g,v1,v2){
   if(v1 != v2){  
     path <- v2  # let path be a vector to store the output in reverse order, and initially put v2 in it
     vert <- v2  # let vert be the last node on the optimal path which has been put into path
-    while(vinfo[vinfo$v == vert,]$prev != "undefined"){ #if vert's pre is undefined, then stop because it has reached v1
+    while(vinfo[vinfo$v == vert,]$prev != "undefined"){ 
+      #if vert's pre is undefined, then stop because it has reached v1
       path <- c(path,vinfo[vinfo$v == vert,]$prev)   #put pre into path recursively
       vert <- vinfo[vinfo$v == vert,]$prev           #and update vert recursively
     }
@@ -275,19 +271,24 @@ shortest_path <- function(g,v1,v2){
   }else{
     #this part is a bit painful because at first I didn't think v1 can be equal to v2
     #therefore in my previous code design I use undefined prev for v1
-    #when I found this error, I was approaching the deadline so I chose not to touch previous code and add the 
+    #when I found this error, I was approaching the deadline so #
+    # I chose not to touch previous code and add the 
     #additional consideration for the case v1 = v2 here.
     #so to answer Prof. Rundel's question, is the painful code below really necessary?
-    #should have been no, but yes when we approached deadline. sorry about that, if you're patient, please finish reading it smile emoticon
+    #should have been no, but yes when we approached deadline. 
+    #sorry about that, if you're patient, please finish reading it smile emoticon
     toV1 <- edges[edges$end == v1,]
     #let toV1 store the edges whose end is v1 (then is v2 too)
     minlength <- Inf
     #minlengh is the shortest path's distance 
     penultimate <- NULL
-    #penultimate is the second last vertex in the shortest path, i.e. the vertex pointing back to v1
-    for(element in toV1[toV1$start != v1,]$start){  #loop through the vertices who points to v1 excluding v1 itself, call it element
+    #penultimate is the second last vertex in the shortest path, 
+    #i.e. the vertex pointing back to v1
+    for(element in toV1[toV1$start != v1,]$start){  
+      #loop through the vertices who points to v1 excluding v1 itself, call it element
       if(toV1[toV1$start == element,]$weight + vinfo[vinfo$v == element,]$dist < minlength){
-        #if the dist between element and v1 plus the dist of element is less than minlength, then update it as the new minlength
+        #if the dist between element and v1 plus the dist of element 
+        #is less than minlength, then update it as the new minlength
         minlength <- toV1[toV1$start == element,]$weight + vinfo[vinfo$v == element,]$dist
         penultimate <- element
         # update the penultimate vertex
@@ -304,7 +305,8 @@ shortest_path <- function(g,v1,v2){
         if(is.null(penultimate)){
           return(c())
         }else{
-          #otherwise, penultimate exsits, update path and vert in the same way as was done when v1 !=v1
+          #otherwise, penultimate exsits, update path and vert in the 
+          #same way as was done when v1 !=v1
           path <- penultimate
           vert <- penultimate
           while(vinfo[vinfo$v == vert,]$prev != "undefined"){
