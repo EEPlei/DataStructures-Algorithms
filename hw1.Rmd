@@ -8,7 +8,7 @@ Team4 - Duke Dinosaurs HW 1 Write Up
 ```{r}
 source("graph.R")
 ```
-#VALID#
+###VALID###
 
 Our is_valid function will test if the inputted graph object is a list of lists. We also check to see if the names of our vertices are unique, and that each vertex has a list of only edges and weights with edges being integers and weights being numeric. It will also check to make sure that no vertex connects to a nonexistent vertex and that each edge has a weight that is greater than 0. 
 
