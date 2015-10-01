@@ -1,5 +1,5 @@
-#edge function - helper#
-edge <- function(g){
+#edge_summary function - helper#
+edge_summary <- function(g){
   # function where input is 'g' #
   output <- data.frame(start = numeric(), end = numeric(), weight = numeric(),stringsAsFactors =F)
   # makes an empty dataframe. where the horizontal header has "start", "end", and "weight" #
@@ -70,14 +70,14 @@ is_valid <- function(g){
 } 
 
 #is_undirected function
-#to check whether its edge data frame is symmetric
+#to check whether its edge_summary data frame is symmetric
 is_undirected <- function(g){
   
   if(!is_valid(g)){ #if graph is not valid, return an error
     stop("Please input a valid graph")
   }
   
-  edges <- edge(g)
+  edges <- edge_summary(g)
   if (nrow(edges)>0) #again the loop runs when the array starts from 0
     for(i in 1:nrow(edges)){
       istart <- edges[i,]$start
@@ -112,8 +112,8 @@ is_isomorphic <- function(g1, g2){
   if(!is_valid(g2)){
     stop("Please input a valid graph")
   } #tests is_valid#
-  df1 = edge(g1) # makes graph1 into dataframe #
-  df2 = edge(g2) # makes graph2 into dataframe #
+  df1 = edge_summary(g1) # makes graph1 into dataframe #
+  df2 = edge_summary(g2) # makes graph2 into dataframe #
   if(nrow(df1) != nrow(df2)){
     return(FALSE)
   } # compares number of rows #
@@ -178,7 +178,7 @@ is_connected <- function(g, v1, v2) {
   }
   
   
-  edges <- edge(g)
+  edges <- edge_summary(g)
   return(is_connected_helper(edges, v1, v2, c())) 
   # call up is_connected_helper, to use the "seen" array : this is to prevent infinite loops
 }
@@ -223,7 +223,7 @@ shortest_path <- function(g,v1,v2){
   }#test whether both vertices are valid inputs
   
   #the following code will apply Dijkstra's Algorithm
-  edges <- edge(g)
+  edges <- edge_summary(g)
   #dist means distance from source to source
   #prev means previous node in optimal path
   #initializaiton: vinfo is a table summarizing all vertices with dist and pre
