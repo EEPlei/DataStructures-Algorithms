@@ -10,7 +10,7 @@ min_span_tree <- function(g){
     stop("Please input an undirected graph")
   }
   
-  edges <- edge(g)
+  edges <- edge_summaryg)
   #Remove redundancies for the edge table of an Undirected graph
   edges <- edges[edges$start < edges$end,]
   #The following code will apply Prim's Algorithm
