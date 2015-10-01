@@ -53,7 +53,7 @@ is_valid(g2)
 ```
 This will also return false, because if you look at vertex B$edges, you can see that it goes to 1L and 3L. 1L would be the first vertex in the list, so A but 3L is linking to the third vertex when it doesn't exist in g2. 
 
-###Undirected### 
+###Undirected###
 
 This function will test to see if a graph is undirected. A graph is undirected if all directed edges within the graph have a directed edge coming back with the same weight. For example, should vertex A connect to B with weight w, B should also connect to A with weight w. 
 
@@ -92,7 +92,7 @@ This will also return FALSE. The issue here is that A goes to B with weight 1, b
 
 The purpose of this function is that given two graph objects, the function will give us TRUE if isomorphic, and FALSE if not. If two graphs are isomorphic, the vertices, edges, and weights are identical. Say we have vertex A in the first graph, and it connects to vertex B with weight w. We should also have a vertex A in the second graph that connects to vertex B with weight w. I call them vertex A and vertex B, because isomorphic graphs will be comparing the names of the vertices, not their position within the graph. This should hold true for the entire graph. 
 
-First thing to note. We have created a helper function called edge. Edge takes a graph object and creates a data frame with three columns, start, end, and weight. The start and end columns will contain the name of the vertices. Weight will be a column of numbers. Each row will represent an edge and list the starting vertex, ending vertex and the weight. 
+First thing to note. We have created a helper function called `edge`. Edge takes a graph object and creates a data frame with three columns, start, end, and weight. The start and end columns will contain the name of the vertices. Weight will be a column of numbers. Each row will represent an edge and list the starting vertex, ending vertex and the weight. 
 
 Aside from that, we utilized if statements and for loops to achieve our purpose. Subsetting and logical operators were also very helpful in eliminating graphs step by step. We worked from the broadest aspects we didn't want and then slowly became more detailed. 
 
