@@ -107,10 +107,10 @@ is_undirected <- function(g){
 is_isomorphic <- function(g1, g2){
   
   if(!is_valid(g1)){
-    stop("error")
+    stop("Please input a valid graph")
   } #tests is_valid#
   if(!is_valid(g2)){
-    stop("error")
+    stop("Please input a valid graph")
   } #tests is_valid#
   df1 = edge(g1) # makes graph1 into dataframe #
   df2 = edge(g2) # makes graph2 into dataframe #
