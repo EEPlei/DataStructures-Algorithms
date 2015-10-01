@@ -16,7 +16,7 @@ edge <- function(g){
       output <- rbind(output,setNames(as.list(newedge), names(output)))
     }
     # makes a vector where you take the start node, end node, and the weight #
-    # rwo bind the empty dataframe and set the names as the just made vectors #
+    # row bind the empty dataframe and set the names as the just made vectors #
     # and the names already assigned to the empty dataframe #
     #convert numbers to letters #
     for(m in 1:length(output$start)){
