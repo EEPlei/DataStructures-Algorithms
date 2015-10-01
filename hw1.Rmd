@@ -59,12 +59,12 @@ This function will test to see if a graph is undirected. A graph is undirected i
 
 We first test to see if the inputted graph is valid. 
 
-Afterwards, we utilize a helper function, `edge`, that will turn a graph into a dataframe, such that each row will represent a directed edge with the first column noting the starting vertex, the second column noting the ending vertex, and the third column noting the weight of that edge. 
+Afterwards, we utilize a helper function, `edge_summary`, that will turn a graph into a dataframe, such that each row will represent a directed edge with the first column noting the starting vertex, the second column noting the ending vertex, and the third column noting the weight of that edge. 
 ```{r}
 edge_summary(graph1)
 is_undirected(graph1)
 ```
-Since we know that graph1 is valid, we can go ahead and show an example of what the edge function will do. Inputting graph1 into our `is_undirected` function will also result in TRUE. Looking at the dataframe we created using our `edge` function, you should be able to see that each row should have a complimentary row. We test for undirected-ness in our function using the following method. 
+Since we know that graph1 is valid, we can go ahead and show an example of what the edge function will do. Inputting graph1 into our `is_undirected` function will also result in TRUE. Looking at the dataframe we created using our `edge_summary` function, you should be able to see that each row should have a complimentary row. We test for undirected-ness in our function using the following method. 
 
 We only consider the case where a graph has more than 0 edges. Utilizing a for loop to run through all the rows in the graph's dataframe, we then use if statements to knock out graphs with attributes of an undirected graph. We first test to see if there's a row such that the ith row that we are testing will have the starting vertex as the ending vertex and vice-versa. If one does exist, we then test the weight of that row with our ith row. If the weight is the same, then we have a complimentary directed edge for our ith row.  
 
@@ -92,13 +92,13 @@ This will also return FALSE. The issue here is that A goes to B with weight 1, b
 
 The purpose of this function is that given two graph objects, the function will give us TRUE if isomorphic, and FALSE if not. If two graphs are isomorphic, the vertices, edges, and weights are identical. Say we have vertex A in the first graph, and it connects to vertex B with weight w. We should also have a vertex A in the second graph that connects to vertex B with weight w. I call them vertex A and vertex B, because isomorphic graphs will be comparing the names of the vertices, not their position within the graph. This should hold true for the entire graph. 
 
-First thing to note. We have created a helper function called `edge`. Edge takes a graph object and creates a data frame with three columns, start, end, and weight. The start and end columns will contain the name of the vertices. Weight will be a column of numbers. Each row will represent an edge and list the starting vertex, ending vertex and the weight. 
+First thing to note. We have created a helper function called `edge_summary`. `edge_summary` takes a graph object and creates a data frame with three columns, start, end, and weight. The start and end columns will contain the name of the vertices. Weight will be a column of numbers. Each row will represent an edge and list the starting vertex, ending vertex and the weight. 
 
 Aside from that, we utilized if statements and for loops to achieve our purpose. Subsetting and logical operators were also very helpful in eliminating graphs step by step. We worked from the broadest aspects we didn't want and then slowly became more detailed. 
 
-The first thing we do in the function is to test if it both graphs are valid by plugging them into the is_valid function that was already written. There's no point in testing invalid graphs for isomorphism. 
+The first thing we do in the function is to test if it both graphs are valid by plugging them into the `is_valid` function that was already written. There's no point in testing invalid graphs for isomorphism. 
 
-Next, we put each graph through the edge function to obtain dataframes. We then test to see if these two dataframes have the same number of rows or in other words, edges going in one direction. So, although vertex A is going to vertex B with weight w, and vertex B is going to vertex A with weight w, this will show up as A B w and B A w - 2 separate timese in our dataframe. In a special case, it is possible for our dataframe to have 0 rows. This is a result from a graph with a vertex that doesn't link to anything and has no weight. In this case, the only graph it would equal to is a graph with a single vertex of the same name that also doesn't link to anything and has no weight. 
+Next, we put each graph through the `edge_summary` function to obtain dataframes. We then test to see if these two dataframes have the same number of rows or in other words, edges going in one direction. So, although vertex A is going to vertex B with weight w, and vertex B is going to vertex A with weight w, this will show up as A B w and B A w - 2 separate times in our dataframe. In a special case, it is possible for our dataframe to have 0 rows. This is a result from a graph with a vertex that doesn't link to anything and has no weight. In this case, the only graph it would equal to is a graph with a single vertex of the same name that also doesn't link to anything and has no weight. 
 
 Since our dataframe can't have a negative number of rows, we now consider the remaining case; where our dataframe has 1 or more rows. We use a for loop to run through all the different rows in our first graph's dataframe. We find the entry for the start, end, and weight for the ith row and store them inside variables for ease of use later on. We test to see if the starting vertex in our first graph is a starting vertex anywhere in our second graph. If there is, we store the indexes of those rows in a variable. Now, we check to see if our ending vertex in graph 1 is a ending vertex in any of those rows with the same starting vertex. If there is, there should only be one. We find the weight for that row in our second graph's dataframe with the same starting and ending vertex. Should that weight be equal to the first graph's weight we found earlier, we have an identical edge. Going through all the rows in our first graph's dataframe, if we find an identical edge for all of them in our second graph's dataframe, the two graphs are isomorphic. Remember, we made sure that our two graphs have the same number of edges at the very beginning. As such, there is no way for our second graph to contain all the edges our first graph does and some additional edge (which wouldn't have made the two graphs isomorphic). 
 
@@ -106,7 +106,7 @@ Examples
 ```{r}
 is_isomorphic(graph1, graph1)
 ```
-Let's continue to use graph1 as our example. This will return TRUE since it meets all the vertices, edges, and weights are identical. This is a slightly trivial answer though since graph1 is already viewably identical as itself. 
+Let's continue to use graph1 as our example. This will return TRUE since it meets all the vertices, edges, and weights are identical. This is a slightly trivial answer though since graph1 is already viewably identical to itself. 
 
 Let's try two other graphs. 
 ```{r}
@@ -122,7 +122,7 @@ g6 = list(B = list(edges   = 2L,
 is_isomorphic(g5,g6)
 is_isomorphic(g6,g5)
 ```
-These two should return TRUE as well. Let's use the edge function to make it easier to see why. 
+These two should return TRUE as well. Let's use the `edge_summary` function to make it easier to see why. 
 ```{r}
 edge_summary(g5)
 edge_summary(g6)
@@ -162,7 +162,7 @@ The purpose of this function is to see if there is a path from a given vertex to
 
 Before running the function, we first run a series of checks on our input variables. We first check if the graph is valid or not. We then check whether or not our edges are null. Then we check if the edges are of the types "logical"--for example, if the user puts in g1, v1, and "TRUE" into the function then the function throws an error that one of the edges specified is not a valid entry. We also check if the edges our numeric variables. If they are, then our function throws an error so that the user can input a character value into v1 and v2. We also check if the input variables are vectorized. If v1 or v2 is punched in as a vector, the function throws an error. Lastly, if the edges are not in the graph utilized, then the function also throws an error. 
 
-We implemented a recursion process in running our "is_connected" function. We first generate a function named "is_connected_helper." The purpose of this function is to create an array called "seen." The "seen" array indexes the vertices that we've already passed when we walk from edge A to edge B. The "seen" array also keeps track of the list of vertices that the function has already checked. The reason we keep the list of passed vertices is to prevent an infinite loop. For instance, let edge A have a vertex that is directed towards B and let B have a vertex directed towards A. By the definition of recursion, our function will take us from A to B then from B to A and again to B. This loop will not stop unless we specify the "seen" array so that the function does not go back to A from B. More specifically, if we input is_connected(g1, A, C) where A is connected to B, B to A and C, the function will start from edge A, the starting edge. Then it will see that there is a path from A to B. Once it reaches B, it will identify that there are a total of two paths from B--one path to A and another to C. With the help of the "is_connected_helper", the function will take note that we've already seen the edge A as our starting location and take the path to C. Hence, the function will identify that there is indeed a path from A to C. Hence, the final output is_connected(g, v1, v2) tells us whether or not edge v1 is connected to edge v2. If v1 and v2 are connected--either directly or through some v_i such that v_i is an element of g1--the function returns TRUE and FALSE otherwise.   
+We implemented a recursion process in running our `is_connected` function. We first generate a function named `is_connected_helper`. The purpose of this function is to create an array called `seen`. The "seen" array indexes the vertices that we've already passed when we walk from edge A to edge B. The `seen` array also keeps track of the list of vertices that the function has already checked. The reason we keep the list of passed vertices is to prevent an infinite loop. For instance, let edge A have a vertex that is directed towards B and let B have a vertex directed towards A. By the definition of recursion, our function will take us from A to B then from B to A and again to B. This loop will not stop unless we specify the `seen` array so that the function does not go back to A from B. More specifically, if we input `is_connected(g1, A, C)` where A is connected to B, B to A and C, the function will start from edge A, the starting edge. Then it will see that there is a path from A to B. Once it reaches B, it will identify that there are a total of two paths from B--one path to A and another to C. With the help of the `is_connected_helper`, the function will take note that we've already seen the edge A as our starting location and take the path to C. Hence, the function will identify that there is indeed a path from A to C. Hence, the final output `is_connected(g, v1, v2)` tells us whether or not edge v1 is connected to edge v2. If v1 and v2 are connected--either directly or through some `v_i` such that `v_i` is an element of g1--the function returns TRUE and FALSE otherwise.   
 
 ###Shortest Path###
 
@@ -172,11 +172,9 @@ First, we test to see if the inputted graph is valid. Then if the inputted verti
 
 Now, we apply Dijkstra's Algorithm. Our method begins by picking a starting vertex and mark every other vertex as unvisited. We'll assign each vertex inside our graph two attributes to begin with. The first is distance. To begin with, our distance for each vertex is infinity. The other attribute is previous, which well tell us what the previously visited node is. Starting from our starting vertex, we look at all the vertexes that our starting vertex goes to. We find the one with the shortest distance or weight and pick that one. Now that we are at out second vertex, we mark this vertex as visited. We also change the attribute previous to be the first vertex. Should the distance from the first vertex to our current vertex on the route we took be less than the distance previously assigned to our current vertex, we will replace the old distance with the current one. Note, we never visit an already visited vertex. From our current vertex, we repeat the steps in finding the connected vertex with the shortest distance and replace the previous and distance attribute if appropriate. We repeat these steps until we reach the vertex we want to end at. Since we've recorded our steps on the route, it is easy to go back and map out the shortest_path.
 
-For the corner case where the first vertex goes to itself, Dijkstra's Algorithm won't directly solve the problem. What we do in this case, is look at all the paths from vertices that can go to the first vertex in one step. We use Dijkstra's Algorithm to calculate the shortest route from that. Then, we add the shortest distance to the distance between the penultimate vertex and the last vertex. Also, if possible, we compare the shortest path we found to the distance between the first vertex and itself. 
+We implemented the `shortest_path` function using forloops, while loops and ifelse statements. 
 
-We implemented the shortest_path function using forloops, while loops and ifelse statements. 
-
-Our graph1 wouldn't illustrate our shortest_path function well. 
+Our graph1 wouldn't illustrate our `shortest_path function` well. 
 We'll us a different one. 
 ```{r}
 g11 = list(A = list(edges   = c(2L,4L,5L),
