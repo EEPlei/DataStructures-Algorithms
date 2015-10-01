@@ -53,7 +53,7 @@ is_valid(g2)
 ```
 This will also return false, because if you look at vertex B$edges, you can see that it goes to 1L and 3L. 1L would be the first vertex in the list, so A but 3L is linking to the third vertex when it doesn't exist in g2. 
 
-Undirected 
+###Undirected### 
 
 This function will test to see if a graph is undirected. A graph is undirected if all directed edges within the graph have a directed edge coming back with the same weight. For example, should vertex A connect to B with weight w, B should also connect to A with weight w. 
 
@@ -88,7 +88,7 @@ is_undirected(g4)
 This will also return FALSE. The issue here is that A goes to B with weight 1, but B goes to A with weight 2. 
 
 
-Isomorphic
+###Isomorphic###
 
 The purpose of this function is that given two graph objects, the function will give us TRUE if isomorphic, and FALSE if not. If two graphs are isomorphic, the vertices, edges, and weights are identical. Say we have vertex A in the first graph, and it connects to vertex B with weight w. We should also have a vertex A in the second graph that connects to vertex B with weight w. I call them vertex A and vertex B, because isomorphic graphs will be comparing the names of the vertices, not their position within the graph. This should hold true for the entire graph. 
 
@@ -156,7 +156,7 @@ is_isomorphic(g8,g9)
 We get FALSE here too for two reasons. In g8, we have vertex A going to vertex A with weight 1, but in g9, vertex A is going to vertex A with weight 2. The weights differ for one. Another issue is that vertex A is going to vertex B with weight 2 in g8 but weight 1 in g9. 
 
 
-Connected
+###Connected###
 
 The purpose of this function is to see if there is a path from a given vertex to another vertex within a given graph. 
 
@@ -164,7 +164,7 @@ Before running the function, we first run a series of checks on our input variab
 
 We implemented a recursion process in running our "is_connected" function. We first generate a function named "is_connected_helper." The purpose of this function is to create an array called "seen." The "seen" array indexes the vertices that we've already passed when we walk from edge A to edge B. The "seen" array also keeps track of the list of vertices that the function has already checked. The reason we keep the list of passed vertices is to prevent an infinite loop. For instance, let edge A have a vertex that is directed towards B and let B have a vertex directed towards A. By the definition of recursion, our function will take us from A to B then from B to A and again to B. This loop will not stop unless we specify the "seen" array so that the function does not go back to A from B. More specifically, if we input is_connected(g1, A, C) where A is connected to B, B to A and C, the function will start from edge A, the starting edge. Then it will see that there is a path from A to B. Once it reaches B, it will identify that there are a total of two paths from B--one path to A and another to C. With the help of the "is_connected_helper", the function will take note that we've already seen the edge A as our starting location and take the path to C. Hence, the function will identify that there is indeed a path from A to C. Hence, the final output is_connected(g, v1, v2) tells us whether or not edge v1 is connected to edge v2. If v1 and v2 are connected--either directly or through some v_i such that v_i is an element of g1--the function returns TRUE and FALSE otherwise.   
 
-Shortest Path
+###Shortest Path###
 
 The purpose of the shortest_path is to find the shortest path between two vertices inside a given graph through the edges. By shortest path, we mean the sum of weights for the edges in the route taken. 
 
