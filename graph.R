@@ -32,41 +32,41 @@ edge_summary <- function(g){
 }
 #is_valid function
 is_valid <- function(g){
-  if(typeof(g)!="list")
-    return(FALSE)
+  if(typeof(g)!="list"){
+    return(FALSE)}
   #check if the graph is a list
-  if(length(g) == 0)
-    return(FALSE)
-  if(length(g) != length(unique(names(g))))
-    return(FALSE)
+  else if(length(g) == 0){
+    return(FALSE)}
+  else if(length(g) != length(unique(names(g)))){
+    return(FALSE)}
   #check if the names for every element are all unique
   for(i in 1:length(g)){
-    if(typeof(g[[i]]) != "list")
-      return(FALSE)
+    if(typeof(g[[i]]) != "list"){
+      return(FALSE)}
     #check if every element is a list
-    if(!("edges" %in% names(g[[i]]) & "weights" %in% names(g[[i]])))
-      return(FALSE)
-    if(length(g[[i]]$edges) | length(g[[i]]$weights) > 0)
-      if(any(is.na(g[[i]]$edges)) | any(is.na(g[[i]]$weights)))
-        return(FALSE)
-    if(typeof(g[[i]]$edges) != "integer" & typeof(g[[i]]$edges) != "NULL")
-      return(FALSE)
-    if(class(g[[i]]$weights) != "numeric" & class(g[[i]]$weights) != "NULL")
-      return(FALSE)
+    else if(!("edges" %in% names(g[[i]]) & "weights" %in% names(g[[i]]))){
+      return(FALSE)}
+    else if(length(g[[i]]$edges) | length(g[[i]]$weights) > 0){
+      if(any(is.na(g[[i]]$edges)) | any(is.na(g[[i]]$weights))){
+        return(FALSE)}}
+    else if(typeof(g[[i]]$edges) != "integer" & typeof(g[[i]]$edges) != "NULL"){
+      return(FALSE)}
+    else if(class(g[[i]]$weights) != "numeric" & class(g[[i]]$weights) != "NULL"){
+      return(FALSE)}
     #check if every element only contains edges and weights that are of the appropriate type
-    if(any(g[[i]]$edges>length(g)) | any(g[[i]]$edges<1))
-      return(FALSE)
+    else if(any(g[[i]]$edges>length(g)) | any(g[[i]]$edges<1)){
+      return(FALSE)}
     #check there are any edges to non-existent vertices
-    if(any(g[[i]]$weights <= 0))
-      return(FALSE)
+    else if(any(g[[i]]$weights <= 0)){
+      return(FALSE)}
     #check if all weights are not less than or equal to 0
-    if(length(g[[i]]$edges) != length(g[[i]]$weights))
-      return(FALSE)
-    if(length(g[[i]]$edges) != length(unique(g[[i]]$edges)))
-      return(FALSE)
+    else if(length(g[[i]]$edges) != length(g[[i]]$weights)){
+      return(FALSE)}
+    else if(length(g[[i]]$edges) != length(unique(g[[i]]$edges))){
+      return(FALSE)}
     #check if every edge has a weight
   }
-  return(TRUE)
+  else return(TRUE)
 } 
 
 #is_undirected function
